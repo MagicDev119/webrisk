@@ -21,27 +21,27 @@ function game_info($Game) {
 			unset($player_data[0]); // current player for un-started review games
 			unset($player_data['']); // host for review games
 
-			$ra_table_meta = [
+			$ra_table_meta = array(
 				'sortable' => true ,
 				'no_data' => '<p>There are no players to show</p>' ,
 				'class' => 'datatable users',
-			];
+			);
 
-			$ra_table_format = [
-				['SPECIAL_CLASS', 'true', '###substr(\'[[[color]]]\', 0, 3).((\'Dead\' == \'[[[state]]]\') ? \' dead\' : \'\')'],
+			$ra_table_format = array(
+				array('SPECIAL_CLASS', 'true', '###substr(\'[[[color]]]\', 0, 3).((\'Dead\' == \'[[[state]]]\') ? \' dead\' : \'\')'),
 
-				['Order', 'order', 'digit'],
-				['Player', 'username', 'text'],
-				['State', 'state', 'text'],
-				['Round', 'round', 'digit'],
-				['Turn', 'turn', 'digit'],
-				['Armies', 'armies', 'digitmissing'],
-				['Land', 'land', 'digitmissing'],
-				['Conts', 'cont_list', 'digitmissing'],
-				['Cards', 'card_count', 'digitmissing'],
-			//	['% trade', 'trade_perc', 'percentmissing'],
-				['Next turn', '[[[next_armies]]] / [[[next_armies_trade]]]', 'nextturn'],
-			];
+				array('Order', 'order', 'digit') ,
+				array('Player', 'username', 'text') ,
+				array('Phase', 'state', 'text') ,
+				array('Round', 'round', 'digit') ,
+				array('Turn', 'turn', 'digit') ,
+				array('Armies', 'armies', 'digitmissing') ,
+				array('Lands', 'land', 'digitmissing') ,
+				array('Regions Owned', 'cont_list', 'digitmissing') ,
+				array('Cards', 'card_count', 'digitmissing') ,
+			//	array('% trade', 'trade_perc', 'percentmissing') ,
+				array('Reinforcements', '[[[next_armies]]] / [[[next_armies_trade]]]', 'nextturn') ,
+			);
 
 			echo get_table($ra_table_format, $player_data, $ra_table_meta);
 
@@ -154,7 +154,7 @@ function game_info($Game) {
  * @return string
  */
 function get_html_class($idx, $count) {
-	$classes = [];
+	$classes = array();
 
 	if (0 === ($idx % 2)) {
 		$classes[] = 'alt';
@@ -253,11 +253,11 @@ function conquer_limit_table($extra_info) {
 		// if we are calculating based on trade_value, trade_count, or continents
 		// the 1 point buffer needs to be added
 		$start_count = 1;
-		if (in_array($type, ['trade_value', 'trade_count', 'continents'])) {
+		if (in_array($type, array('trade_value', 'trade_count', 'continents'))) {
 			$start_count = 0;
 		}
 
-		$conquests = [];
+		$conquests = array( );
 		$repeats = 0;
 		$prev_limit = 0;
 		for ($n = 0; $n <= 200; ++$n) {
@@ -282,7 +282,7 @@ function conquer_limit_table($extra_info) {
 		}
 
 		// don't show 0 count for certain types
-		if ( ! in_array($type, ['trade_value', 'trade_count', 'continents'])) {
+		if ( ! in_array($type, array('trade_value', 'trade_count', 'continents'))) {
 			unset($conquests[0]);
 		}
 		?>
@@ -389,7 +389,7 @@ function trade_value_table($trade_values, $trade_count = 0) {
 	// if the last value was not a changer
 	// show the last value three times
 	$extended = false;
-	if ( ! in_array($trade_values[count($trade_values) - 1][0], ['+', '-'])) {
+	if ( ! in_array($trade_values[count($trade_values) - 1][0], array('+','-'))) {
 		$idx = count($trade_values) + 1;
 		$value = $trade_values[count($trade_values) - 1];
 
@@ -450,7 +450,7 @@ function game_map( ) {
 
 $html = <<< EOHTML
 
-	<map id="gamemap" name="gamemap">
+	<!--<map id="gamemap" name="gamemap">
 		<area nohref="nohref" id="ma01" alt="Alaska [01]" title="Alaska [01]" shape="poly" coords="48,40,72,48,72,80,81,80,89,99,85,108,71,88,43,82,19,98,27,86,13,77,18,68,22,55,27,46" />
 		<area nohref="nohref" id="ma02" alt="Alberta [02]" title="Alberta [02]" shape="poly" coords="89,99,85,108,96,129,150,129,151,82,81,80" />
 		<area nohref="nohref" id="ma03" alt="Central America [03]" title="Central America [03]" shape="poly" coords="99,183,127,225,141,229,149,244,159,253,159,247,156,244,163,233,158,227,165,215,157,214,150,218,141,215,140,205,144,200,139,194" />
@@ -498,7 +498,7 @@ $html = <<< EOHTML
 		<area nohref="nohref" id="ma40" alt="Indonesia [40]" title="Indonesia [40]" shape="poly" coords="617,293,648,306,674,284,683,291,679,302,698,303,692,327,685,336,651,335" />
 		<area nohref="nohref" id="ma41" alt="New Guinea [41]" title="New Guinea [41]" shape="poly" coords="700,282,708,292,719,294,719,305,738,310,762,312,757,298,735,280,705,277" />
 		<area nohref="nohref" id="ma42" alt="Western Australia [42]" title="Western Australia [42]" shape="poly" coords="664,356,710,331,714,335,714,365,747,365,745,409,724,386,701,389,677,399,665,396" />
-	</map> <!-- #gamemap -->
+	</map>--> <!-- #gamemap -->
 
 EOHTML;
 

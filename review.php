@@ -64,13 +64,13 @@ $meta['show_menu'] = false;
 $meta['head_data'] = '
 	<link rel="stylesheet" type="text/css" media="screen" href="css/game.css" />
 
-	<script>//<![CDATA[
+	<script type="text/javascript">//<![CDATA[
 		var state = "watching";
 		var game_file = '.json_encode($_SESSION['game_file']).';
 		var step = '.json_encode($Review->step).';
 		var steps = '.json_encode($Review->get_steps( )).';
 	/*]]>*/</script>
-	<script src="scripts/review.js"></script>
+	<script type="text/javascript" src="scripts/review.js"></script>
 ';
 
 echo get_header($meta);
@@ -79,8 +79,11 @@ echo get_header($meta);
 
 		<div id="contents">
 			<ul id="buttons">
-				<li><a href="index.php<?php echo $GLOBALS['_?_DEBUG_QUERY']; ?>">Main Page</a></li>
-				<li><a href="game.php<?php echo $GLOBALS['_?_DEBUG_QUERY']; ?>">Reload Game Board</a></li>
+				    <li><a href="index.php<?php echo $GLOBALS['_?_DEBUG_QUERY']; ?>"style="color:#FF0000;">Lobby</a></li>
+					<li><a href="#game_info" class="fancybox">Game Info</a></li>
+					<li> <div id="history">
+				<a href="review_history.php" data-fancybox-type="ajax" class="fancybox">Game log</a></li>
+
 			</ul>
 			<h2>Game #<?php echo $Review->id.': '.htmlentities($Review->name, ENT_QUOTES, 'UTF-8', false); ?> <span class="type"><a href="#game_info" class="fancybox">Game Info</a></span></h2>
 
@@ -94,10 +97,10 @@ echo get_header($meta);
 					<div id="pm26"></div><div id="pm27"></div><div id="pm28"></div><div id="pm29"></div><div id="pm30"></div>
 					<div id="pm31"></div><div id="pm32"></div><div id="pm33"></div><div id="pm34"></div><div id="pm35"></div>
 					<div id="pm36"></div><div id="pm37"></div><div id="pm38"></div><div id="pm39"></div><div id="pm40"></div>
-					<div id="pm41"></div><div id="pm42"></div><div id="pm43"></div><div id="pm44"></div>
+					<div id="pm41"></div><div id="pm42"></div>
 				</div> <!-- #pathmarkers -->
 
-				<img src="images/blank.gif" width="800" height="449" usemap="#gamemap" alt="" />
+				<img src="images/boards.jpg" width="760" height="500" usemap="#gamemap" alt="" />
 
 				<?php echo board($Review); ?>
 
@@ -108,7 +111,7 @@ echo get_header($meta);
 				<div id="dice"><?php
 					$move = $Review->get_step( );
 
-					if ('A' === $move[0]) {
+					if ('A' === $move{0}) {
 						list($type, $action) = explode(' ', $move);
 						$action = explode(':', $action);
 						$rolls = explode(',', $action[4]);
@@ -150,7 +153,7 @@ echo get_header($meta);
 				<?php
 					$players = $Review->get_players( );
 
-					$colors = [];
+					$colors = array( );
 					foreach ($players as $key => $player) {
 						$colors[$player['color']] = htmlentities($GLOBALS['_PLAYERS'][$key]).' ['.$key.']';
 					}
@@ -167,13 +170,9 @@ echo get_header($meta);
 				<div id="move_info"><?php echo $move_info; ?></div>
 			</div> <!-- #controls -->
 
-			<div id="history">
-				<a href="review_history.php" data-fancybox-type="ajax" class="fancybox">Click for History</a>
-			</div> <!-- #history -->
-
 			<?php echo game_info($Review); ?>
 
-			<script>
+			<script type="text/javascript">
 				$('#game_info').hide( );
 			</script>
 

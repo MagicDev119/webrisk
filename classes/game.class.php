@@ -91,14 +91,14 @@ class Game
 	 *
 	 * @var array
 	 */
-	static protected $_PLAYER_DEFAULTS = [
+	static protected $_PLAYER_DEFAULTS = array(
 			'order_num' => 0,
 			'cards' => null,
 			'armies' => 0,
 			'state' => 'Waiting',
 			'extra_info' => null,
 			'move_date' => '0000-00-00 00:00:00',
-	];
+		);
 
 
 	/** static protected property _EXTRA_INFO_DEFAULTS
@@ -106,30 +106,30 @@ class Game
 	 *
 	 * @var array
 	 */
-	static protected $_EXTRA_INFO_DEFAULTS = [
-		'fortify' => true,
-		'multiple_fortify' => false,
-		'connected_fortify' => false,
-		'place_initial_armies' => false,
-		'initial_army_limit' => 0,
-		'kamikaze' => false,
-		'warmonger' => false,
-		'nuke' => false,
-		'turncoat' => false,
-		'fog_of_war_armies' => 'all',
-		'fog_of_war_colors' => 'all',
-		'trade_number' => 0,
-		'custom_trades' => [],
-		'trade_card_bonus' => 2,
-		'conquer_type' => 'none',
-		'conquer_conquests_per' => 0,
-		'conquer_per_number' => 0,
-		'conquer_skip' => 0,
-		'conquer_start_at' => 0,
-		'conquer_minimum' => 1,
-		'conquer_maximum' => 42,
-		'custom_rules' => '',
-	];
+	static protected $_EXTRA_INFO_DEFAULTS = array(
+			'fortify' => true,
+			'multiple_fortify' => false,
+			'connected_fortify' => false,
+			'place_initial_armies' => false,
+			'initial_army_limit' => 0,
+			'kamikaze' => false,
+			'warmonger' => false,
+			'nuke' => false,
+			'turncoat' => false,
+			'fog_of_war_armies' => 'all',
+			'fog_of_war_colors' => 'all',
+			'trade_number' => 0,
+			'custom_trades' => array( ),
+			'trade_card_bonus' => 2,
+			'conquer_type' => 'none',
+			'conquer_conquests_per' => 0,
+			'conquer_per_number' => 0,
+			'conquer_skip' => 0,
+			'conquer_start_at' => 0,
+			'conquer_minimum' => 1,
+			'conquer_maximum' => 42,
+			'custom_rules' => '',
+		);
 
 
 	/** static protected property _PLAYER_EXTRA_INFO_DEFAULTS
@@ -137,14 +137,14 @@ class Game
 	 *
 	 * @var array
 	 */
-	static protected $_PLAYER_EXTRA_INFO_DEFAULTS = [
+	static protected $_PLAYER_EXTRA_INFO_DEFAULTS = array(
 			'conquered' => 0,
 			'forced' => false,
 			'get_card' => false,
 			'occupy' => null,
 			'round' => 1,
 			'turn' => 1,
-	];
+		);
 
 
 	/** public property id
@@ -335,7 +335,7 @@ class Game
 		$error = error_get_last( );
 		call($error);
 
-		if (0 == ((E_ERROR | E_WARNING | E_PARSE) & ($error['type'] ?? 0))) {
+		if (0 == ((E_ERROR | E_WARNING | E_PARSE) & $error['type'])) {
 			try {
 				$this->_save( );
 			}
@@ -443,11 +443,11 @@ class Game
 		$_P['conquer_type'] = strtolower($_P['conquer_type']);
 
 		// fog of war cleanup
-		$allowed_fogs = [
+		$allowed_fogs = array(
 			'all',
 			'adjacent',
 			'none',
-		];
+		);
 
 		if ( ! in_array($_P['fog_of_war_armies'], $allowed_fogs)) {
 			$_P['fog_of_war_armies'] = 'all';
@@ -458,7 +458,7 @@ class Game
 		}
 
 		// custom trades cleanup
-		$trades = [];
+		$trades = array( );
 		// only run this if the trade box was open
 		if (isset($_P['custom_trades_box'])) {
 			foreach ((array) $_P['custom_trades'] as $key => $trade) {
@@ -484,7 +484,7 @@ class Game
 		call($trades);
 
 		// conquer limits cleanup
-		$allowed_conquer_types = [
+		$allowed_conquer_types = array(
 			'none',
 			'trade_value',
 			'trade_count',
@@ -493,7 +493,7 @@ class Game
 			'land',
 			'continents',
 			'armies',
-		];
+		);
 
 		// if we don't have a conquer type set, or the box was closed
 		if ( ! in_array($_P['conquer_type'], $allowed_conquer_types) || ! isset($_P['conquer_limits_box'])) {
@@ -512,7 +512,7 @@ class Game
 
 		call($_P);
 
-		$extra_info = [
+		$extra_info = array(
 			'fortify' => (bool) $_P['fortify'],
 			'multiple_fortify' => (bool) $_P['multiple_fortify'],
 			'connected_fortify' => (bool) $_P['connected_fortify'],
@@ -535,7 +535,7 @@ class Game
 			'conquer_minimum' => (int) $_P['conquer_minimum'],
 			'conquer_maximum' => (int) $_P['conquer_maximum'],
 			'custom_rules' => htmlentities($_P['custom_rules'], ENT_QUOTES, 'UTF-8', false),
-		];
+		);
 		call($extra_info);
 
 		// don't allow the conquer minimum to drop below 1, else the game stops
@@ -552,18 +552,18 @@ class Game
 		}
 
 		// create the game
-		$required = [
+		$required = array(
 			'host_id' ,
 			'name' ,
 			'capacity' ,
-		];
+		);
 
-		$key_list = array_merge($required, [
+		$key_list = array_merge($required, array(
 			'password' ,
 			'time_limit' ,
 			'allow_kibitz' ,
 			'extra_info' ,
-		]);
+		));
 
 		try {
 			$_DATA = array_clean($_P, $key_list, $required);
@@ -596,7 +596,7 @@ class Game
 		$this->id = $insert_id;
 
 		// set the modified date
-		$Mysql->insert(self::GAME_TABLE, ['modify_date' => NULL], " WHERE game_id = '{$this->id}' ");
+		$Mysql->insert(self::GAME_TABLE, array('modify_date' => NULL), " WHERE game_id = '{$this->id}' ");
 
 		// pull the fresh data
 		$this->_pull( );
@@ -619,7 +619,7 @@ class Game
 	{
 		call(__METHOD__);
 
-		$colors = [
+		$colors = array(
 			'red' ,
 			'blue' ,
 			'green' ,
@@ -627,9 +627,9 @@ class Game
 			'brown' ,
 			'black' ,
 //			'purple' ,
-		];
+		);
 
-		$used_colors = [];
+		$used_colors = array( );
 		if (is_array($this->_players)) {
 			foreach ($this->_players as $player) {
 				$used_colors[] = $player['color'];
@@ -732,20 +732,20 @@ class Game
 			WHERE `GP`.`color` = :color
 				AND `GP`.`game_id` = :game_id
 		";
-		$params = [
+		$params = array(
 			':color' => $_P['color'],
 			':game_id' => $this->id,
-		];
+		);
 		$used = $Mysql->fetch_value($query, $params);
 
 		if ($used) {
 			throw new MyException(__METHOD__.': Game player color ('.$_P['color'].') already used', 214);
 		}
 
-		$required = [
+		$required = array(
 			'player_id' ,
 			'color' ,
-		];
+		);
 
 		try {
 			$_DATA = array_clean($_P, $required, $required);
@@ -793,7 +793,7 @@ class Game
 		}
 
 		// send the emails
-		Email::send('invite', $player_ids, ['game_id' => $this->id, 'name' => $this->name, 'extra_text' => htmlentities($_POST['extra_text'], ENT_QUOTES, 'UTF-8', false)]);
+		Email::send('invite', $player_ids, array('game_id' => $this->id, 'name' => $this->name, 'extra_text' => htmlentities($_POST['extra_text'], ENT_QUOTES, 'UTF-8', false)));
 
 		return $player_ids;
 	}
@@ -855,7 +855,7 @@ class Game
 			throw $e;
 		}
 
-		$land_count = [];
+		$land_count = array( );
 		foreach ($player_ids as $player_id) {
 			$land_count[$player_id] = count($this->_risk->get_players_territory($player_id));
 		}
@@ -883,7 +883,7 @@ class Game
 			$this->_test_placing( );
 		}
 		else {
-			Email::send('start', $player_ids, ['game_id' => $this->id, 'name' => $this->name]);
+			Email::send('start', $player_ids, array('game_id' => $this->id, 'name' => $this->name));
 		}
 
 		return true;
@@ -1051,11 +1051,11 @@ class Game
 		}
 
 		// check to see if we killed our opponent
-		if (in_array($this->_risk->players[$defend_id]['state'], ['Resigned', 'Dead'])) {
+		if (in_array($this->_risk->players[$defend_id]['state'], array('Resigned', 'Dead'))) {
 			if ('Dead' == $this->_risk->players[$defend_id]['state']) {
 				$this->_players[$defend_id]['object']->add_loss( );
 				$this->_players[$player_id]['object']->add_kill( );
-				Email::send('defeated', $defend_id, ['game_id' => $this->id, 'name' => $this->name, 'player' => $this->_players[ $player_id]['object']->username]);
+				Email::send('defeated', $defend_id, array('game_id' => $this->id, 'name' => $this->name, 'player' => $this->_players[$player_id]['object']->username));
 			}
 
 			$this->_test_winner( );
@@ -1093,10 +1093,10 @@ class Game
 				// check the exceptions, if they are excusable,
 				// just go on, else, throw a new one
 				$defeated = false;
-				$excused = [
+				$excused = array(
 					201, // player is out of attacking armies
 					222, // player is in an incorrect state (switched because they ran out of attackable armies)
-				];
+				);
 				if ( ! in_array($e->getCode( ), $excused)) {
 					throw $e;
 				}
@@ -1384,6 +1384,51 @@ class Game
 		}
 	}
 
+	public function skipToNext($cur_state, $cur_player_id)
+	{
+		call(__METHOD__);
+
+		if ($this->paused) {
+			throw new MyException(__METHOD__.': Trying to perform an action on a paused game');
+		}
+
+		$cur_player_id = (int) $cur_player_id;
+		
+		foreach ($this->_risk->players as $player_id => $player) {
+			if ($player['state'] != 'waiting') {
+				$cur_player_id = $player_id;
+			}
+		}
+
+		$Mysql = Mysql::get_instance( );
+
+		$query = "
+			SELECT *
+			FROM ".self::GAME_LOG_TABLE."
+			WHERE game_id = '{$this->id}' AND data LIKE 'N%' 
+			ORDER BY create_date DESC
+				, microsecond DESC 
+			LIMIT 0, 1
+		";
+
+		$result = $Mysql->fetch_assoc($query);
+		call($result);
+		if ($result) {
+			$created =  explode(".", $result['microsecond']);
+			$created = $created[0];
+			$now = microtime( );
+			list($usec, $sec) = explode(' ', $now);
+			if (intval($created) + 20 > intval($sec)) return;
+		}
+
+		try {
+			$this->_risk->set_player_state('Waiting', $cur_player_id, false, true);
+		}
+		catch (MyException $e) {
+			throw $e;
+		}
+	}
+
 
 	/** public function nudge
 	 *		Nudges the inactive players to make their moves
@@ -1409,12 +1454,12 @@ class Game
 		// we must find all players who are not waiting or dead and send to all of them
 		$nudgable = $this->_test_nudge( );
 		if (count($nudgable)) {
-			Email::send('nudge', $nudgable, ['game_id' => $this->id, 'name' => $this->name, 'player' => $nudger]);
+			Email::send('nudge', $nudgable, array('game_id' => $this->id, 'name' => $this->name, 'player' => $nudger));
 			$Mysql->delete(self::GAME_NUDGE_TABLE, " WHERE game_id = '{$this->id}' ");
 
-			$data = [];
+			$data = array( );
 			foreach ($nudgable as $id) {
-				$data[] = ['game_id' => $this->id, 'player_id' => $id];
+				$data[] = array('game_id' => $this->id, 'player_id' => $id);
 			}
 			$Mysql->multi_insert(self::GAME_NUDGE_TABLE, $data);
 
@@ -1508,7 +1553,7 @@ class Game
 		$continents = $this->_risk->get_players_continents($player_id);
 
 		if ( ! $continents) {
-			return [];
+			return array( );
 		}
 
 		$visible_board = $this->get_visible_board($observer_id);
@@ -1535,7 +1580,7 @@ class Game
 	 */
 	public function draw_players( )
 	{
-		$players = [];
+		$players = array( );
 		foreach ($this->_risk->players as $player_id => $player) {
 			$players[$player_id]['player_id'] = $player_id;
 			$players[$player_id]['color'] = $this->_players[$player_id]['color'];
@@ -1547,7 +1592,7 @@ class Game
 
 		// sort the players by order
 		asort($order);
-		$temp_players = [];
+		$temp_players = array( );
 		foreach ($order as $player_id => $order_num) {
 			$temp_players[$player_id] = $players[$player_id];
 		}
@@ -1587,7 +1632,7 @@ class Game
 	{
 		if ('Finished' == $this->state) {
 			// TODO somehow this thing lost it's current player value...
-			return '<div id="action">The game is over<br />'.$GLOBALS['_PLAYERS'][$this->_risk->current_player].' won</div>';
+			return '<div id="action"><h3>The game is over<br /><img src="images/win.png" alt="winner" width="13" height="16"></br>'.$GLOBALS['_PLAYERS'][$this->_risk->current_player].' won!</h3></div>';
 		}
 
 		if ($this->watch_mode) {
@@ -1644,17 +1689,16 @@ class Game
 					$nudge = '<input type="button" name="nudge" id="nudge" value="Nudge" />';
 				}
 
-				$html .= '
-				<p>It is not your turn</p>
-				'.$form_start;
+				$html .= '<center><p>It is not your turn yet.</p></center><center>Get <a href="prefs.php">notified by email</a>.<br>Enable Auto-↻ for live-play.</center>'
+				.$form_start;
 
 				if ('Placing' == $this->state) {
 					$html .= '
 					<p>Wait while others finish placing their pieces</p>';
 				}
 				else {
-					$html .= '
-					<input class="resign" type="submit" name="submit" id="submit" value="Resign the Game" />';
+					$html .= '<br>
+					<input class="rotate" type="submit" name="submit" id="submit" value="🏳 Resign" />';
 				}
 
 				$html .= '
@@ -1668,11 +1712,11 @@ class Game
 				<p>Trade matching cards</p>
 				'.$form_start;
 
-				$bonus_land = [];
+				$bonus_land = array( );
 				$players_cards = (array) $this->_risk->get_players_cards($_SESSION['player_id']);
 
 				// order the cards by type
-				$order = [];
+				$order = array( );
 				foreach ($players_cards as $card_id => $card) {
 					$order[$card_id] = $card[CARD_TYPE];
 				}
@@ -1685,23 +1729,21 @@ class Game
 					if ('Wild' != $type) {
 						$type = substr($type, 0, 3);
 					}
+					if ( $this->_extra_info['nuke'] || $this->_extra_info['turncoat']) {
+                        		$turncoat_territory = $this->_risk->get_turncoat_territory($_SESSION['player_id']);
+                 
+                        			if (('Wild' != $type) && (array_key_exists($card_id, $turncoat_territory)) && (count($turncoat_territory) > 1)) {
+                            			$bonus_land[$card_id] = Risk::$TERRITORIES[$card_id];
+					    	} 
+					}					
+                    			if ( !$this->_extra_info['nuke'] && !$this->_extra_info['turncoat'] ) {
+						if (('Wild' != $type) && (array_key_exists($card_id, $players_territory))) {
+						$bonus_land[$card_id] = Risk::$TERRITORIES[$card_id];
+					    	}
+                    			}					
 
-					if ($this->_extra_info['nuke'] || $this->_extra_info['turncoat']) {
-						$turncoat_territory = $this->_risk->get_turncoat_territory($_SESSION['player_id']);
-
-						if (('Wild' !== $type) && (array_key_exists($card_id, $turncoat_territory)) && (count($turncoat_territory) > 1)) {
-							$bonus_land[ $card_id ] = Risk::$TERRITORIES[ $card_id ];
-						}
-					}
-
-					if ( ! $this->_extra_info['nuke'] && ! $this->_extra_info['turncoat']) {
-						if (('Wild' !== $type) && (array_key_exists($card_id, $players_territory))) {
-							$bonus_land[ $card_id ] = Risk::$TERRITORIES[ $card_id ];
-						}
-					}
-
-					$html .= '<div class="card"><label class="inline"><input type="checkbox" name="cards[]" value="' . $card_id . '" />'
-						. $type . ' - ' . (('Wild' == $type) ? 'None' : shorten_territory_name(Risk::$TERRITORIES[ $card_id ][ NAME ])) . '</label></div>';
+					$html .= '<div class="card"><label class="inline"><input type="checkbox" name="cards[]" value="'.$card_id.'" />'
+								.$type.' - '.(('Wild' == $type) ? 'None' : shorten_territory_name(Risk::$TERRITORIES[$card_id][NAME])).'</label></div>';
 				}
 
 				if (0 != count($bonus_land)) {
@@ -1732,9 +1774,9 @@ class Game
 
 			case 'placing' :
 				$html .= '
-				<p>Place your armies</p>
+				<p>Deploy your army</p>
 				'.$form_start.'
-					<p>You have <span id="armies">'.$this->_risk->players[$player_id]['armies'].'</span> armies.</p>
+					<p>You have <span id="armies">'.$this->_risk->players[$player_id]['armies'].'</span> soldiers</p>
 					<div><!-- <label for="num_armies">Armies</label> --><input type="text" name="num_armies" id="num_armies" size="5" /><select id="num_armies_options">'.$army_options.'</select></div>
 					<div><!-- <label for="land_id">Territory</label> --><select name="land_id" id="land_id">'.$mine_select.'</select></div>
 					<div><input type="submit" name="submit" id="submit" value="Place Armies" /></div>
@@ -1743,7 +1785,7 @@ class Game
 
 			case 'attacking' :
 				$html .= '
-				<p>Perform your attack</p>
+				<p>Attack the enemy!</p>
 				'.$form_start.'
 					<div><label for="num_armies">Armies</label> <select name="num_armies" id="num_armies"><option>3</option><option>2</option><option>1</option></select><label class="inline"><input type="checkbox" name="till_dead" id="till_dead" /> Till dead</label></div>
 					<div><!-- <label for="attack_id">Attack from</label> --><select name="attack_id" id="attack_id">'.$mine_select.'</select></div>
@@ -1776,7 +1818,7 @@ class Game
 				}
 
 				$html .= '
-				<p>Move your armies</p>
+				<p>Invaded! Move in.</p>
 				'.$form_start.'
 					<div><label for="num_armies">Armies</label> <select name="num_armies" id="num_armies">'.$num_armies_options.'</select></div>
 					<div><input type="submit" name="submit" id="submit" value="Occupy" /></div>
@@ -1796,9 +1838,7 @@ class Game
 
 			case 'dead' :
 			default :
-				$html .= '
-				<p>You are dead</p>
-				Better luck next time.';
+				$html .= '<div id="action"><h3>You are dead <br /><img src="images/dead.png" alt="dead"></br>Better luck next time.</h3></div>';
 				break;
 		}
 
@@ -1855,19 +1895,19 @@ class Game
 		$visible_board = $this->get_visible_board($observer_id);
 
 		// run through the visible board and count some things
-		$visible_land = [];
+		$visible_land = array( );
 		foreach ($visible_board as $land) {
 			if ( ! is_array($land)) {
 				continue;
 			}
 
 			if ( ! isset($visible_land[$land['player_id']])) {
-				$visible_land[$land['player_id']] = [
+				$visible_land[$land['player_id']] = array(
 					'player_id' => $land['player_id'],
 					'resigned' => $land['resigned'],
 					'land' => 0,
 					'armies' => 0,
-				];
+				);
 			}
 
 			$seen_gray = false;
@@ -1885,20 +1925,20 @@ class Game
 
 		$trade_value = $this->_risk->get_trade_value( );
 
-		$temp_players = [];
-		$order = [];
+		$temp_players = array( );
+		$order = array( );
 		foreach ($this->_players as $id => $player) {
 			// make sure we have a board entry for everybody
 			if ( ! isset($visible_land[$id])) {
-				$visible_land[$id] = [
+				$visible_land[$id] = array(
 					'player_id' => $id,
 					'resigned' => '',
 					'land' => '--',
 					'armies' => '--',
-				];
+				);
 			}
 
-			$temp_players[$id] = [
+			$temp_players[$id] = array(
 				'player_id' => $player['player_id'],
 				'username' => $player['object']->username,
 				'color' => $player['color'],
@@ -1907,14 +1947,14 @@ class Game
 				'state' => $this->_risk->players[$id]['state'],
 				'round' => $this->_risk->players[$id]['extra_info']['round'],
 				'turn' => $this->_risk->players[$id]['extra_info']['turn'],
-			];
+			);
 
 			$order[$id] = $temp_players[$id]['order'];
 		}
 
 		asort($order);
 
-		$players = [];
+		$players = array( );
 		foreach ($order as $id => $null) {
 			$players[$id] = $temp_players[$id];
 		}
@@ -1923,7 +1963,7 @@ class Game
 			// continents
 			$player['conts'] = $this->get_players_visible_continents($player_id, $observer_id);
 
-			$player['cont_names'] = [];
+			$player['cont_names'] = array( );
 			foreach ($player['conts'] as $cont) {
 				$player['cont_names'][] = $cont[0];
 			}
@@ -1990,7 +2030,7 @@ class Game
 				}
 			}
 			else {
-				$player['cards'] = [];
+				$player['cards'] = array( );
 				$player['card_count'] = '???';
 				$player['trade_perc'] = '??? %';
 				$player['next_armies_trade'] = '???';
@@ -2008,10 +2048,10 @@ class Game
 			}
 
 			if ('Dead' == $player['state']) {
-				$player['cards'] = [];
+				$player['cards'] = array( );
 				$player['card_count'] = '--';
 				$player['trade_perc'] = '--';
-				$player['conts'] = [];
+				$player['conts'] = array( );
 				$player['cont_list'] = '--';
 				$player['next_armies'] = '--';
 				$player['next_armies_trade'] = '--';
@@ -2369,10 +2409,10 @@ class Game
 	 */
 	static protected function _get_fog_of_war($data)
 	{
-		return [
+		return array(
 			'armies' => 'Show '.ucfirst($data['fog_of_war_armies']),
 			'colors' => 'Show '.ucfirst($data['fog_of_war_colors']),
-		];
+		);
 	}
 
 
@@ -2530,7 +2570,7 @@ class Game
 	 */
 	static protected function _get_trade_array($data)
 	{
-		return (false != $data['custom_trades'] ? $data['custom_trades'] : []);
+		return (false != $data['custom_trades'] ? $data['custom_trades'] : array( ));
 	}
 
 
@@ -2688,7 +2728,7 @@ fix_extra_info($player['extra_info']);
 			array_trim($player['cards'], 'int');
 		}
 		else {
-			$player['cards'] = [];
+			$player['cards'] = array( );
 		}
 
 		$player['game_id'] = $this->id;
@@ -2705,23 +2745,23 @@ fix_extra_info($player['extra_info']);
 		// move any data we need to over to the risk class player data
 		$risk_player = $player;
 
-		$player_keys = [
+		$player_keys = array(
 			'player_id',
 			'color',
 			'move_date',
 			'object',
-		];
+		);
 
 		$player = array_clean($player, $player_keys);
 
-		$risk_player_keys = [
+		$risk_player_keys = array(
 			'player_id',
 			'order_num',
 			'cards',
 			'armies',
 			'state',
 			'extra_info',
-		];
+		);
 
 		$risk_player = array_clean($risk_player, $risk_player_keys);
 
@@ -2798,7 +2838,7 @@ fix_extra_info($player['extra_info']);
 		// find out who the current player is
 		if (('Playing' == $this->state) || ('Finished' == $this->state)) {
 			foreach ($this->_risk->players as $player_id => $player) {
-				if ( ! in_array($player['state'], ['Waiting', 'Resigned', 'Dead'])) {
+				if ( ! in_array($player['state'], array('Waiting', 'Resigned', 'Dead'))) {
 					$this->_risk->current_player = $player_id;
 					break;
 				}
@@ -2822,10 +2862,10 @@ fix_extra_info($player['extra_info']);
 		}
 
 		foreach ($result as $land) {
-			$board[$land['land_id']] = [
+			$board[$land['land_id']] = array(
 				'player_id' => $land['player_id'] ,
 				'armies' => $land['armies'] ,
-			];
+			);
 		}
 
 		$this->_risk->board = $board;
@@ -2858,7 +2898,7 @@ fix_extra_info($player['extra_info']);
 
 		// send an email if we have to
 		if ($this->_risk->new_player) {
-			Email::send('turn', $this->_risk->current_player, ['game_id' => $this->id, 'name' => $this->name]);
+			Email::send('turn', $this->_risk->current_player, array('game_id' => $this->id, 'name' => $this->name));
 		}
 
 		// make sure we don't have a MySQL error here, it may be causing the issues
@@ -2936,14 +2976,14 @@ fix_extra_info($player['extra_info']);
 		$db_player_ids = array_shrink($db_players, 'player_id');
 
 		if ( ! $db_player_ids) {
-			$db_player_ids = [];
+			$db_player_ids = array( );
 		}
 
 		$game_player_ids = array_keys($this->_players);
 		$new_players = array_diff($game_player_ids, $db_player_ids);
 
 		foreach ($new_players as $new_player_id) {
-			$update_player = [
+			$update_player = array(
 				'game_id' => $this->id,
 				'player_id' => $new_player_id,
 				'color' => $this->_players[$new_player_id]['color'],
@@ -2952,7 +2992,7 @@ fix_extra_info($player['extra_info']);
 				'armies' => $this->_risk->players[$new_player_id]['armies'],
 				'state' => $this->_risk->players[$new_player_id]['state'],
 				'move_date' => null,
-			];
+			);
 
 			$update_player['cards'] = implode(',', $update_player['cards']);
 
@@ -2972,7 +3012,7 @@ fix_extra_info($player['extra_info']);
 
 		// check the player parts
 		foreach ($db_players as $db_player) {
-			$update_player = [];
+			$update_player = array( );
 			$player_id = $db_player['player_id'];
 
 			$risk_player = $this->_risk->players[$player_id];
@@ -3025,25 +3065,25 @@ fix_extra_info($player['extra_info']);
 
 			if (count($update_player)) {
 				$update_modified = true;
-				$Mysql->insert(self::GAME_PLAYER_TABLE, $update_player, ['game_id' => $this->id, 'player_id' => $player_id]);
+				$Mysql->insert(self::GAME_PLAYER_TABLE, $update_player, array('game_id' => $this->id, 'player_id' => $player_id));
 			}
 		}
 
-		if ( ! $this->_extra_info['nuke'] || ! $this->_extra_info['turncoat']) {
+		if ( ! $this->_extra_info['nuke'] || ! $this->_extra_info['turncoat'] ) {
 			if ('Waiting' != $this->state) {
-				// update the land data
-				$query = "
-					SELECT *
-					FROM `".self::GAME_LAND_TABLE."`
-					WHERE game_id = :game_id
-				";
-				$params = [
-					':game_id' => $this->id,
-				];
-				$db_lands = $Mysql->fetch_array($query, $params);
+			// update the land data
+			$query = "
+				SELECT *
+				FROM `".self::GAME_LAND_TABLE."`
+				WHERE game_id = :game_id
+			";
+			$params = array(
+				':game_id' => $this->id,
+			);
+			$db_lands = $Mysql->fetch_array($query, $params);
 
 				if ( ! $db_lands) {
-					$board = $this->_risk->board;
+				$board = $this->_risk->board;
 
 					foreach ($board as $land_id => $land) {
 						$land['game_id'] = $this->id;
@@ -3055,7 +3095,7 @@ fix_extra_info($player['extra_info']);
 				}
 				else {
 					foreach ($db_lands as $db_land) {
-						$update_land = [];
+						$update_land = array( );
 						$land_id = $db_land['land_id'];
 
 						$rland = $this->_risk->board[$land_id];
@@ -3075,17 +3115,18 @@ fix_extra_info($player['extra_info']);
 					}
 				}
 			}
-		}
-		else {
+    	}
+    else
+    {
 			// update the land data
 			$query = "
 				SELECT *
 				FROM `".self::GAME_LAND_TABLE."`
 				WHERE game_id = :game_id
 			";
-			$params = [
+			$params = array(
 				':game_id' => $this->id,
-			];
+			);
 			$db_lands = $Mysql->fetch_array($query, $params);
 
 			if ( ! $db_lands) {
@@ -3101,7 +3142,7 @@ fix_extra_info($player['extra_info']);
 			}
 			else {
 				foreach ($db_lands as $db_land) {
-					$update_land = [];
+					$update_land = array( );
 					$land_id = $db_land['land_id'];
 
 					$rland = $this->_risk->board[$land_id];
@@ -3120,11 +3161,12 @@ fix_extra_info($player['extra_info']);
 					}
 				}
 			}
-		}
+		
+    }
 
 		// update the game modified date
 		if ($update_modified) {
-			$Mysql->insert(self::GAME_TABLE, ['modify_date' => NULL], " WHERE game_id = '{$this->id}' ");
+			$Mysql->insert(self::GAME_TABLE, array('modify_date' => NULL), " WHERE game_id = '{$this->id}' ");
 		}
 	}
 
@@ -3140,11 +3182,11 @@ fix_extra_info($player['extra_info']);
 	public static function log_deferred($game_id, $log_data)
 	{
 		if (empty($GLOBALS['_log_messages'])) {
-			$GLOBALS['_log_messages'] = [];
+			$GLOBALS['_log_messages'] = array( );
 		}
 
 		if (empty($GLOBALS['_log_messages'][$game_id])) {
-			$GLOBALS['_log_messages'][$game_id] = [];
+			$GLOBALS['_log_messages'][$game_id] = array( );
 		}
 
 		$GLOBALS['_log_messages'][$game_id][] = $log_data;
@@ -3169,10 +3211,10 @@ fix_extra_info($player['extra_info']);
 
 		$Mysql = Mysql::get_instance( );
 
-		$data = [
+		$data = array(
 			'game_id' => $game_id,
 			'data' => $log_data,
-		];
+		);
 
         // all this kerfuffle is because there is a very small but real
         // discrepancy between the values returned by date() and microtime()
@@ -3206,7 +3248,7 @@ fix_extra_info($player['extra_info']);
 			self::log($game_id, $log_message);
 		}
 
-		$GLOBALS['_log_messages'][$game_id] = [];
+		$GLOBALS['_log_messages'][$game_id] = array( );
 	}
 
 
@@ -3253,7 +3295,7 @@ fix_extra_info($player['extra_info']);
 
 		// parse the logs
 		if ($parse && $return) {
-			$logs = [];
+			$logs = array( );
 			foreach ($return as $row) {
 				$message = self::parse_move_info($row, $trade_bonus, $game_id, $logs);
 
@@ -3275,7 +3317,7 @@ fix_extra_info($player['extra_info']);
 		$data = explode(':', $move_data[LOG_DATA]);
 #				call($data);
 
-		$player = [];
+		$player = array( );
 		for ($i = 0; $i < 3; ++$i) {
 			if ( ! isset($data[$i])) {
 				break;
@@ -3318,22 +3360,22 @@ if (isset($data[7])) {
 						$message .= ' and was defeated';
 					}
 
-					$logs[] = [
+					$logs[] = array(
 						'game_id' => $game_id,
 						'message' => $message,
 						'data' => null,
 						'create_date' => ( ! empty($move['create_date']) ? $move['create_date'] : false),
-					];
+					);
 
 					// add the roll data
 					$message = ' - - ROLL: attack = ' . implode(', ', str_split($attack_roll)) . '; defend = ' . implode(', ', str_split($defend_roll)) . ';';
 
-					$logs[] = [
+					$logs[] = array(
 						'game_id' => $game_id,
 						'message' => $message,
 						'data' => null,
 						'create_date' => ( ! empty($move['create_date']) ? $move['create_date'] : false),
-					];
+					);
 
 					// make the attack announcement (gets saved below)
 					$message = "ATTACK: {$player[0]} [{$data[0]}] with " . strlen($attack_roll) . " " . plural(strlen($attack_roll), 'army', 'armies') . " on " . shorten_territory_name(Risk::$TERRITORIES[$data[1]][NAME]) . " [{$data[1]}], attacked {$player[2]} [{$data[2]}] with " . strlen($defend_roll) . " " . plural(strlen($defend_roll), 'army', 'armies') . " on " . shorten_territory_name(Risk::$TERRITORIES[$data[3]][NAME]) . " [{$data[3]}]";
@@ -3429,34 +3471,34 @@ if (isset($data[7])) {
 				break;
 
 			case 'T' : // Trade
-				$message = "TRADE: {$player[0]} traded in cards for {$data[2]} ".plural($data[2], 'army', 'armies');
-
-				// add traded cards to message
-				if (isset($data[1])) {
+		            	$message = "TRADE: {$player[0]} traded in cards for {$data[2]} ".plural($data[2], 'army', 'armies');
+                
+                		// add traded cards to message    
+                		if (isset($data[1])) {
 					$data[1] = explode(',', $data[1]);
 					foreach ($data[1] as $card_id) {
-						$message .= ' ( '.Risk::$TERRITORIES[ $card_id ][ NAME ].' ) ';
+		            			$message .= ' ( '.Risk::$TERRITORIES[$card_id][NAME] .' ) ';
 					}
-
+		
 				}
 
-				if (0 == (int) $data[4] && 0 == (int) $data[5] && (0 !== (int) $trade_bonus)) {
-					if ( ! empty($data[3]) && (0 !== (int) $trade_bonus)) {
-						$message .= " and got {$trade_bonus} bonus armies on ".shorten_territory_name(Risk::$TERRITORIES[ $data[3] ][ NAME ])." [{$data[3]}]";
+			    	if ( 0 == (int) $data[4] && 0 == (int) $data[5] && (0 !== (int) $trade_bonus)) {	
+			    		if ( ! empty($data[3]) && (0 !== (int) $trade_bonus)) {
+						$message .= " and got {$trade_bonus} bonus armies on ".shorten_territory_name(Risk::$TERRITORIES[$data[3]][NAME])." [{$data[3]}]";
+				    	}
+				} else
+				{
+					if (1 == (int) $data[4] && 0 == (int) $data[5]){    
+				 		$message .= " and nuked the armies on ".shorten_territory_name(Risk::$TERRITORIES[$data[3]][NAME])." [{$data[3]}]";
+					}
+					if (0 == (int) $data[4] && 1 == (int) $data[5]){    
+			     			$message .= " and turned the armies on ".shorten_territory_name(Risk::$TERRITORIES[$data[3]][NAME])." ";
+					}
+					if (1 == (int) $data[4] && 1 == (int) $data[5]){    
+			     			$message .= " and nuked and turned the armies on ".shorten_territory_name(Risk::$TERRITORIES[$data[3]][NAME])." ";
 					}
 				}
-				else {
-					if (1 == (int) $data[4] && 0 == (int) $data[5]) {
-						$message .= " and nuked the armies on ".shorten_territory_name(Risk::$TERRITORIES[ $data[3] ][ NAME ])." [{$data[3]}]";
-					}
-					if (0 == (int) $data[4] && 1 == (int) $data[5]) {
-						$message .= " and turned the armies on ".shorten_territory_name(Risk::$TERRITORIES[ $data[3] ][ NAME ])." ";
-					}
-					if (1 == (int) $data[4] && 1 == (int) $data[5]) {
-						$message .= " and nuked and turned the armies on ".shorten_territory_name(Risk::$TERRITORIES[ $data[3] ][ NAME ])." ";
-					}
-				}
-
+			   	
 				break;
 
 			case 'V' : // Value
@@ -3475,13 +3517,12 @@ if (isset($data[7])) {
 	 * @param array $defend_roll
 	 *
 	 * @return void
-	 * @throws MySQLException
 	 */
 	public static function log_roll($attack_roll, $defend_roll)
 	{
 		$Mysql = Mysql::get_instance( );
 
-		$insert = [];
+		$insert = array( );
 		foreach ($attack_roll as $i => $attack) {
 			$insert['attack_'.($i + 1)] = $attack;
 		}
@@ -3497,9 +3538,7 @@ if (isset($data[7])) {
 	 *		Grabs the roll stats from the database
 	 *
 	 * @param void
-	 *
 	 * @return array roll data
-	 * @throws MySQLException
 	 */
 	static public function get_roll_stats( )
 	{
@@ -3543,12 +3582,12 @@ if (isset($data[7])) {
 		$theor['3v2']['defend'] = '0.2926'; // 29.26 %
 		$theor['3v2']['both']   = '0.3358'; // 33.58 %
 
-		$fights = [
+		$fights = array(
 			'1v1', '2v1', '3v1',
 			'1v2', '2v2', '3v2',
-		];
+		);
 
-		$wins = ['attack', 'defend', 'both'];
+		$wins = array('attack', 'defend', 'both');
 
 		// grab our counts so we can run some stats
 		$query = "
@@ -3570,7 +3609,7 @@ if (isset($data[7])) {
 		foreach ($fights as $fight) {
 			foreach ($wins as $win) {
 				// we only do 'both' on 2v2 and 3v2 fights
-				if (('both' == $win) && ! in_array($fight, ['2v2', '3v2'])) {
+				if (('both' == $win) && ! in_array($fight, array('2v2', '3v2'))) {
 					continue;
 				}
 
@@ -3664,7 +3703,8 @@ if (isset($data[7])) {
 		if ( ! $this->capacity) {
 			throw new MyException(__METHOD__.': Capacity data not found for game #'.$this->id);
 		}
-		if ($this->_players && $this->capacity <= count($this->_players)) {
+
+		if ($this->capacity <= count($this->_players)) {
 			$this->start($this->_host_id);
 		}
 	}
@@ -3770,7 +3810,7 @@ if (isset($data[7])) {
 		// check the players and see if there are any more alive
 		$count = 0;
 		foreach ($this->_risk->players as $player) {
-			if ( ! in_array($player['state'], ['Resigned', 'Dead'])) {
+			if ( ! in_array($player['state'], array('Resigned', 'Dead'))) {
 				++$count;
 				$alive[] = $player['player_id'];
 			}
@@ -3782,7 +3822,7 @@ if (isset($data[7])) {
 			$this->_players[$alive[0]]['object']->add_win( );
 			self::log($this->id, 'D ' . $alive[0]);
 
-			Email::send('finished', array_keys($this->_players), ['game_id' => $this->id, 'name' => $this->name, 'winner' => $this->_players[ $alive[0]]['object']->username]);
+			Email::send('finished', array_keys($this->_players), array('game_id' => $this->id, 'name' => $this->name, 'winner' => $this->_players[$alive[0]]['object']->username));
 
 			self::write_game_file($this->id);
 		}
@@ -3833,7 +3873,7 @@ if (isset($data[7])) {
 		}
 		array_trim($ids, 'int');
 
-		$nudgable = [];
+		$nudgable = array( );
 		foreach ($ids as $id) {
 			// check the nudge status for this game/player
 			// 'now' is taken from the DB because it may
@@ -3892,7 +3932,7 @@ if (isset($data[7])) {
 
 		$player_id = $this->_risk->begin( );
 
-		Email::send('turn', $player_id, ['game_id' => $this->id, 'name' => $this->name]);
+		Email::send('turn', $player_id, array('game_id' => $this->id, 'name' => $this->name));
 	}
 
 
@@ -3947,7 +3987,7 @@ if (isset($data[7])) {
 
 		// parse the array
 		$prev_step = 0;
-		$trades = [];
+		$trades = array( );
 		foreach ($input as $path_i => $path) {
 			$allow_empty_start = false;
 
@@ -4073,7 +4113,7 @@ if (isset($data[7])) {
 		}
 
 		if ( ! count($trades)) {
-			$trades = [4, 6, 8, 10, 12, 15, '+5'];
+			$trades = array(4,6,8,10,12,15,'+5');
 		}
 		call($trades);
 
@@ -4133,7 +4173,7 @@ if (isset($data[7])) {
 		";
 		$results = $Mysql->fetch_array($query);
 
-		$states = [];
+		$states = array( );
 		foreach ($results as $row) {
 			$states[$row['game_id']] = $row['state'];
 		}
@@ -4142,7 +4182,7 @@ if (isset($data[7])) {
 		if ($list) {
 			foreach ($list as $key => $game) {
 				// remove current player if the game has not started yet
-				if ( ! in_array($game['state'], ['Playing', 'Finished'])) {
+				if ( ! in_array($game['state'], array('Playing', 'Finished'))) {
 					$game['username'] = '';
 				}
 
@@ -4169,7 +4209,7 @@ fix_extra_info($game['extra_info']);
 				$game['clean_custom_rules'] = htmlentities($game['get_custom_rules'], ENT_QUOTES, 'UTF-8', false);
 
 				$game['in_game'] = isset($states[$game['game_id']]);
-				$game['highlight'] = $game['in_game'] && ('Finished' != $game['state']) && ! in_array($states[$game['game_id']], ['Waiting', 'Resigned', 'Dead']);
+				$game['highlight'] = $game['in_game'] && ('Finished' != $game['state']) && ! in_array($states[$game['game_id']], array('Waiting', 'Resigned', 'Dead'));
 
 				$list[$key] = $game;
 			}
@@ -4207,7 +4247,7 @@ fix_extra_info($game['extra_info']);
 
 		// go through the list and figure out what the players true state is
 		if ($list) {
-			$playing = $placing = $waiting = $dead = [];
+			$playing = $placing = $waiting = $dead = array( );
 
 			foreach ($list as $key => $game) {
 				switch ($game['player_state']) {
@@ -4309,7 +4349,7 @@ fix_extra_info($game['extra_info']);
 		";
 		$turns = $Mysql->fetch_value($query);
 
-		return [$count, $next, $mine, $turns];
+		return array($count, $next, $mine, $turns);
 	}
 
 
@@ -4373,14 +4413,14 @@ fix_extra_info($game['extra_info']);
 			self::write_game_file($id);
 		}
 
-		$tables = [
+		$tables = array(
 			self::GAME_LOG_TABLE ,
 			self::GAME_LAND_TABLE ,
 			self::GAME_PLAYER_TABLE ,
 			self::GAME_TABLE ,
-		];
+		);
 
-		$Mysql->multi_delete($tables, ['game_id' => $ids]);
+		$Mysql->multi_delete($tables, array('game_id' => $ids));
 
 		$query = "
 			OPTIMIZE TABLE `".self::GAME_TABLE."`
@@ -4519,7 +4559,7 @@ fix_extra_info($game['extra_info']);
 					case 'Playing' :
 					default :
 						// test the player state
-						if ( ! in_array($game['p_state'], ['Resigned', 'Dead'])) {
+						if ( ! in_array($game['p_state'], array('Resigned', 'Dead'))) {
 							$Game = new Game($game['game_id']);
 							$Game->_risk->halt_redirect = true;
 							$Game->force_resign($player_id);
@@ -4560,7 +4600,7 @@ fix_extra_info($game['extra_info']);
 			throw new MyException(__METHOD__.': No game ids given');
 		}
 
-		$Mysql->insert(self::GAME_TABLE, ['paused' => $pause], " WHERE `game_id` IN (".implode(',', $ids).") ");
+		$Mysql->insert(self::GAME_TABLE, array('paused' => $pause), " WHERE `game_id` IN (".implode(',', $ids).") ");
 	}
 
 
@@ -4598,7 +4638,7 @@ fix_extra_info($game['extra_info']);
 			return false;
 		}
 
-		if ( ! in_array($game['state'], ['Playing', 'Finished'])) {
+		if ( ! in_array($game['state'], array('Playing', 'Finished'))) {
 			return false;
 		}
 
@@ -4619,7 +4659,7 @@ fix_extra_info($game['extra_info']);
 			return false;
 		}
 
-		$players = [];
+		$players = array( );
 		foreach ($results as $result) {
 			$players[$result['player_id']] = $result;
 		}
@@ -4631,7 +4671,7 @@ fix_extra_info($game['extra_info']);
 		}
 
 		$winner = 'Unknown';
-		if ('D' === $logs[0]['data'][0]) {
+		if ('D' === $logs[0]['data']{0}) {
 			$winner = (int) trim($logs[0]['data'], 'D ');
 			$winner = "{$winner} - {$players[$winner]['username']}";
 		}

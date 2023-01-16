@@ -16,21 +16,20 @@
  */
 function array_trim( & $array, $type = null)
 {
-	$types = [
+	$types = array(
 		'int' , 'integer' ,
 		'bool' , 'boolean' ,
-		'float' , 'double' ,
+		'float' , 'double' , 'real' ,
 		'string' ,
 		'array' ,
 		'object' ,
-		'null' ,
-	];
+	);
 
 	// if a non-empty string value comes through, don't erase it
 	// this is specifically for '0', but may work for others
 	$is_non_empty_string = (is_string($array) && strlen(trim($array)));
 	if ( ! $array && ! $is_non_empty_string) {
-		$array = [];
+		$array = array( );
 	}
 
 	if ( ! in_array($type, $types)) {
@@ -65,10 +64,10 @@ function arrayTrim( & $array, $type = null) { return array_trim($array, $type); 
  * @return array
  * @throws MyException
  */
-function array_clean($array, $keys, $required = [])
+function array_clean($array, $keys, $required = array( ))
 {
 	if ( ! is_array($array)) {
-		return [];
+		return array( );
 	}
 
 	array_trim($keys);
@@ -77,10 +76,10 @@ function array_clean($array, $keys, $required = [])
 	$keys = array_unique(array_merge($keys, $required));
 
 	if (empty($keys)) {
-		return [];
+		return array( );
 	}
 
-	$return = [];
+	$return = array( );
 	foreach ($keys as $key) {
 		if (in_array($key, $required) && (empty($array[$key]))) {
 			throw new MyException(__FUNCTION__.': Required element ('.$key.') missing');
@@ -93,7 +92,7 @@ function array_clean($array, $keys, $required = [])
 
 	return $return;
 }
-function arrayClean($array, $keys, $required = []) { return array_clean($array, $keys, $required); }
+function arrayClean($array, $keys, $required = array( )) { return array_clean($array, $keys, $required); }
 
 
 /** function array_transpose [arrayTranspose]
@@ -113,7 +112,7 @@ function array_transpose($array)
 		throw new MyException(__FUNCTION__.': Data given was not an array');
 	}
 
-	$return = [];
+	$return = array( );
 	foreach ($array as $key1 => $value1) {
 		if ( ! is_array($value1)) {
 			continue;
@@ -273,7 +272,7 @@ function explodeFull($separator, $divider, $string, $url = false) { return explo
  */
 function kshuffle( & $array)
 {
-	uasort($array, function($a, $b) { return rand(1, -1); });
+	uasort($array, create_function('$a,$b', 'rand(1, -1);'));
 }
 
 
@@ -320,7 +319,7 @@ function array_merge_plus($array1) {
  * @return array of elements in $array1 that are different from $array2
  */
 function array_diff_recursive($array1, $array2) {
-	$diff = [];
+	$diff = array( );
 
 	foreach ($array1 as $key => $value) {
 		if (array_key_exists($key, $array2)) {

@@ -56,7 +56,7 @@ if ( ! function_exists('call')) {
 
 		$j = 0;
 		$html = '';
-		$debug_funcs = ['dump', 'debug'];
+		$debug_funcs = array('dump', 'debug');
 		if ((bool) $show_from) {
 			$called_from = debug_backtrace();
 
@@ -276,12 +276,12 @@ function pack_replace_callback($match) {
  * @return int the FEN string index
  */
 function get_index($i, $j, $blocks = 3, $elems = 3) {
-	$bits = [
+	$bits = array(
 		($j % $elems), // across within block (across elems)
 		((int) floor($j / $elems) * $blocks * $elems), // down within block (down elems)
 		(($i % $blocks) * $elems), // across blocks
 		((int) floor($i / $blocks) * $blocks * $elems * $elems), // down blocks
-  ];
+	);
 
 	return array_sum($bits);
 }
@@ -380,7 +380,7 @@ function ldate($format, $timestamp = null) {
  * @param string $extra_info reference
  */
 function fix_extra_info(& $extra_info) {
-	if ( ! empty($extra_info) && is_string($extra_info) && ('a' === $extra_info[0])) {
+	if ( ! empty($extra_info) && is_string($extra_info) && ('a' === $extra_info{0})) {
 		$extra_info = unserialize($extra_info);
 		$extra_info = json_encode($extra_info);
 	}

@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
 	// clean the data
 	$subject = $_POST['subject'];
 	$message = $_POST['message'];
-	$user_ids = (array) ife($_POST['user_ids'], [], false);
+	$user_ids = (array) ife($_POST['user_ids'], array( ), false);
 	$send_date = ife($_POST['send_date'], false, false);
 	$expire_date = ife($_POST['expire_date'], false, false);
 
@@ -32,10 +32,10 @@ if (isset($_POST['submit'])) {
 	}
 }
 
-$message = [
+$message = array(
 	'subject' => '',
 	'message' => '',
-];
+);
 
 if (isset($_GET['id'])) {
 	try {
@@ -58,9 +58,9 @@ if (isset($_GET['id'])) {
 $meta['title'] = 'Message Writer';
 $meta['show_menu'] = false;
 $meta['head_data'] = '
-	<style>@import url(css/ui.datepicker.css);</style>
-	<script src="scripts/ui.datepicker.js"></script>
-	<script src="scripts/messages.js"></script>
+	<style type="text/css">@import url(css/ui.datepicker.css);</style>
+	<script type="text/javascript" src="scripts/ui.datepicker.js"></script>
+	<script type="text/javascript" src="scripts/messages.js"></script>
 ';
 
 if (isset($sent)) {

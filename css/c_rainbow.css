@@ -1,0 +1,292 @@
+body {
+	color: #CBEBE3;
+	background-color: #131417
+}
+#caption{
+  font-size: 1.5em;
+  position: static;
+  color:#27AE60;
+  top: 65px;
+  width: 50%;
+  text-shadow: 1px 1px 2px #000000;  
+}
+
+h1 {
+	border-color: #3498DB;
+	background-color: #2C303A;
+}
+
+a {
+	color: #d3c2c0
+}
+
+a:hover {
+	color: #c0d1d3
+}
+
+a.help {
+	border-color: #CFD8DC;
+}
+
+a.help:hover {
+	border-color: #CFD8DC;
+}
+
+abbr,
+acronym {
+	border-color: #CFD8DC;
+}
+
+hr.fancy {
+	background-color: #000;
+	border-color: #CFD8DC;
+}
+
+fieldset {
+	border-color: #D35400;
+}
+
+.warning,
+.warning * {
+	color: #FF705A
+}
+
+.notice,
+.notice * {
+	color: #DD0
+}
+
+.highlight,
+.highlight * {
+	color: #FFDD40
+}
+
+.instruction,
+.instruction * {
+	color: #AAA
+}
+
+#links a {
+	border-color: transparent;
+	background-color: transparent;
+	color: #DDD;
+}
+
+#links a:hover {
+	border-color: #CFD8DC;
+	background-color: #FFF;
+	color: #666BAB;
+}
+
+#menu,
+#mygames {
+	border-color: #CFD8DC;
+}
+
+#menu a,
+#mygames a {
+	color: #2ECC71;
+	background-color: #2C303A;
+	border-color: #CFD8DC;
+}
+
+#menu a:hover,
+#mygames a:hover {
+	color: #C576F6;
+	background-color: #444857;
+	border-color: #CFD8DC
+}
+
+#menu a:hover .notice,
+#mygames a:hover .notice {
+	color: #ffdd40
+}
+
+#menu a .notice,
+#mygames a .notice {
+	color: #ffdd40
+}
+
+#menu li.active a,
+#mygames li.active a {
+	color: #ECF0F1;
+	background-color: #27AE60;
+	border-color: #2ECC71
+}
+
+#menu li.active a .notice,
+#mygames li.active a .notice {
+	color: #FFF
+}
+
+#mygames .finished a {
+	color: #999
+}
+
+#mygames .playing a {
+	color: #ffdd40
+}
+
+#mygames .my_turn a {
+	color: #DD0
+}
+
+#mygames .none a {
+	color: #333
+}
+
+#sidebar #chatbox {
+	background-color: #5A5F73;
+	border-color: #CFD8DC
+}
+
+#notes {
+	background-color: #2C303A;
+	border-color: #CFD8DC;
+}
+
+#chats dt {
+	background: #777;
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#chats dd {
+	border-color: #CFD8DC
+}
+
+h2 {
+	border-color: #CFD8DC
+}
+
+#index_page #chatbox {
+	border-color: #FFDD40
+}
+
+#index_page #chats dt {
+	border-color: #CFD8DC;
+	background-color: transparent
+}
+
+#index_page #chats dd {
+	border-color: #CFD8DC
+}
+
+#footer {
+	color: #CFD8DC;
+	background-color: #2C303A;
+	border-color: #CFD8DC
+}
+
+#buttons a {
+	border-color: #CFD8DC
+}
+
+div.help li strong {
+	color: #ffdd40
+}
+
+table {
+	border-color: #CFD8DC;
+	background-color: #2C303A;
+}
+
+th {
+	border-bottom-color: #FF705A;
+	border-right-color: #FF705A;
+}
+
+tr:hover>td,
+tr:hover>td *,
+tr.alt:hover>td,
+tr.alt:hover>td * {
+	background-color: #444857;
+	color: white !important
+}
+
+td {
+	border-right-color: #CFD8DC
+}
+
+tr.alt,
+tr:nth-child(2n) {
+	background-color: #232323
+}
+
+#custom_trades table.form tr:nth-child(2n) {
+	background-color: inherit
+}
+
+#custom_trades table.form tr:nth-child(2n-1) {
+	background-color: #E7E7E7
+}
+
+.lowlight,
+.lowlight td {
+	color: #666
+}
+
+thead tr th {
+	background-color: #131417
+}
+
+thead tr .headerSortDown,
+thead tr .headerSortUp {
+	background-color: #666BAB;
+	color: #FFF
+}
+
+thead tr .headerSortUp {
+	border-top-color: #CFD8DC
+}
+
+thead tr .headerSortDown {
+	border-bottom-color: #CFD8DC
+}
+
+.fancybox-inner {
+	color: #CBEBE3;
+	background-color: #2C303A
+}
+
+.game_info {
+	background: #FFF;
+	color: #7E9DAD
+}
+
+.game_info th,
+.game_info td {
+	border-bottom: 1px solid #CFD8DC
+}
+
+table.history td {
+	border-bottom-color: #CFD8DC
+}
+
+table.history td.active {
+	background-color: #444
+}
+#players {
+	background-color: #131417
+}
+#controls {
+	background-color: #131417;
+	
+}
+#controls .review span {
+	border-color: #CFD8DC
+}
+
+#controls .review span:hover {
+	border-color: #CFD8DC
+}
+
+#controls .review span.disabled {
+	color: #CCC;
+	border-color: #CFD8DC
+}
+
+#action p {
+	background-color: #D35400;
+	color: #CFD8DC;
+}

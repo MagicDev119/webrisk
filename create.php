@@ -1,5 +1,4 @@
 <?php
-
 require_once 'includes/inc.global.php';
 
 // this has nothing to do with creating a game
@@ -35,13 +34,13 @@ foreach ($Game->get_avail_colors( ) as $color) {
 
 $meta['title'] = 'Create Game';
 $meta['head_data'] = '
-	<script src="scripts/create.js"></script>
+	<script type="text/javascript" src="scripts/create.js"></script>
 ';
 
-$hints = [
+$hints = array(
 	'Create a game by filling out your desired game options.' ,
 	'<span class="highlight">WARNING!</span><br />Games will be deleted after '.Settings::read('expire_games').' days of inactivity.' ,
-];
+);
 
 // make sure this user is not full
 $submit_button = '<div><input type="submit" name="create" value="Create Game" /></div>';
@@ -58,14 +57,21 @@ $contents = <<< EOF
 		<div>
 			{$warning}
 
-			<div><label for="name">Game Name</label><input type="text" id="name" name="name" maxlength="255" /></div>
-
-			<div><label for="capacity">Capacity</label><select id="capacity" name="capacity"><option>2</option><option>3</option><option>4</option><option>5</option><option selected="selected">6</option></select></div>
+			<div><label for="map">Map</label><img src="images/board.jpg" alt="world_classic" width="114" height="75" title="world classic"></div>
+<fieldset>
+				<legend><label class="inline"><input type="checkbox" name="map_box" id="map_box" class="fieldset_box" />Change Map?</label></legend>
+				<div id="map">
+<a href="/play/create.php"><img src="/images/maps/thumbs/worldclassicthumb.jpg" width="57" height="37" title="world classic / 42 territories"></a> <a href="/re/create.php"><img src="/images/maps/thumbs/romanempirethumb.jpg" width="57" height="37" title="roman empire / 64 territories"></a> <a href="/9k/create.php"><img src="/images/maps/thumbs/theninekingdomsthumb.jpg" width="57" height="37" title="9 Kingdoms / 30 territories"></a> <a href="/vikings/create.php"><img src="/images/maps/thumbs/vosthumb.jpg" width="57" height="37" title="vikings / 54 territories"></a> <a href="/balkans/create.php"><img src="/images/maps/thumbs/balkansthumb.jpg" width="57" height="37" title="balkans / 58 territories"></a> <a href="/caribbean/create.php"><img src="/images/maps/thumbs/caribbeanthumb.jpg" width="57" height="37" title="caribbean / 26 territories"></a> <a href="/nz/create.php"><img src="/images/maps/thumbs/newzealandthumb.jpg" width="57" height="37" title="new zealand / 44 territories"></a> <a href="/japan/create.php"><img src="/images/maps/thumbs/japanthumb.jpg" width="57" height="37" title="japan / 40 territories"</a> <a href="/fantasy/create.php"><img src="/images/maps/thumbs/fantasymapthumb.jpg" width="57" height="37" title="fantasy map / 93 territories"></a> <a href="/germany/create.php"><img src="/images/maps/thumbs/germanythumb.jpg" width="57" height="37" title="germany / 40 territories"></a> <a href="/a&a/create.php"><img src="/images/maps/thumbs/axisalliesthumb.jpg" width="57" height="37" title="axis & allies / 75 territories"></a> <a href="/na/create.php"><img src="/images/maps/thumbs/northernamericathumb.jpg" width="57" height="37" title="north america / 60 territories"></></a> <a href="/gc/create.php"><img src="/images/maps/thumbs/goldcoastthumb.jpg" width="57" height="37" title="the gold coast / 68 territories"></></a> <a href="/australasia/create.php"><img src="/images/maps/thumbs/australiathumb.jpg" width="57" height="37" title="australasia / 34 territories"></></a> <a href="/greece/create.php"><img src="/images/maps/thumbs/ancientgreecethumb.jpg" width="57" height="37" title="greece / 57 territories"></></a> <a href="/timor/create.php"><img src="/images/maps/thumbs/easttimorthumb.jpg" width="57" height="37" title="timor / 26 territories"></></a> <a href="/pi/create.php"><img src="/images/maps/thumbs/philippinesthumb.jpg" width="57" height="37" title="philippines / 35 territories"></></a> <a href="/nn/create.php"><img src="/images/maps/thumbs/navajonationthumb.jpg" width="57" height="37" title="navajo nation / 69 territories"></></a> <a href="/chicago/create.php"><img src="/images/maps/thumbs/chicagothumb.jpg" width="57" height="37" title="chicago / 60 territories"></></a>
+</div>
+<!-- #map -->
+			</fieldset>				
+			<div><label for="name">Game Name</label><input type="text" id="name" value="World Classic" name="name" maxlength="255" /></div>
+			<div><label for="capacity">Capacity</label><select id="capacity" name="capacity"><option selected="selected">2</option><option>3</option><option>4</option><option>5</option><option>6</option></select> (Note) The host may start the game under capacity</div>
 
 			<div><label>Fortifications</label><label class="inline"><input type="radio" name="fortify" value="no" /> No</label>
 				<label class="inline"><input type="radio" name="fortify" value="yes" checked="checked" /> Yes</label> |
-				<label class="inline"><input type="checkbox" name="multiple_fortify" value="yes" /> Multiple</label>
-				<label class="inline"><input type="checkbox" name="connected_fortify" value="yes" /> Connected</label>
+				<label class="inline"><input type="checkbox" name="multiple_fortify" value="yes" checked /> Unlimited</label>
+				<label class="inline"><input type="checkbox" name="connected_fortify" value="yes" checked /> Chained</label>
 			</div>
 
 			<div><label>Kamikaze</label><label class="inline"><input type="checkbox" name="kamikaze" value="yes" /> If you can attack, you must attack</label></div>
@@ -83,7 +89,7 @@ $contents = <<< EOF
 			
 			<div><label>Nuclear War</label><label class="inline"><input type="checkbox" name="nuke" value="yes" /> Trade card DEDUCTS from ENEMY land</label></div>
 			<div><label>Turncoat</label><label class="inline"><input type="checkbox" name="turncoat" value="yes" /> Trade card turns enemy allegiance to your army</label></div>
-			<div><label>Placement</label><label class="inline"><input type="checkbox" name="place_initial_armies" value="yes" />Randomly Place ALL starting armies</label></div>
+			<div><label>Placement</label><label class="inline"><input type="checkbox" name="place_initial_armies" value="yes" checked/>Randomly Place ALL starting armies</label></div>
 			<div><label>Placement Limit</label><input type="text" name="initial_army_limit" value="0" size="5" maxlength="3" /></div>
 
 			<fieldset>
@@ -162,11 +168,19 @@ $contents = <<< EOF
 			</fieldset>
 
 			<div><label for="custom_rules">Custom Rules</label><textarea name="custom_rules" id="custom_rules" rows="5" cols="30"></textarea></div>
+			
+			<fieldset>
+				<legend><label class="inline"><input type="checkbox" name="password_box" id="password_box" class="fieldset_box" />Add Password?</label></legend>
+				<div id="password">
+
+			<div class="info">Leave blank for no password.<!--<br />NOTE: Password field is NOT hidden.--></div>
+			<div><label for="password">Password</label><input type="text" id="password" name="password" /></div>
+			
+							</div> <!-- #password -->
+			</fieldset>
 
 			<div class="color"><label for="color">Your Color</label><select id="color" name="color">{$color_selection}</select></div>
 
-			<div class="info">Leave password field blank for no password.<br />NOTE: Password field is NOT hidden.</div>
-			<div><label for="password">Password</label><input type="text" id="password" name="password" /></div>
 
 			{$submit_button}
 		</div>

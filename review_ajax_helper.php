@@ -23,7 +23,7 @@ if (array_key_exists('file', $_REQUEST)) {
 }
 
 if (empty($_SESSION['game_file'])) {
-	echo json_encode(['msg' => 'RELOAD']);
+	echo json_encode(array('msg' => 'RELOAD'));
 	exit;
 }
 
@@ -57,7 +57,7 @@ if (isset($_POST['cardcheck'])) {
 // just return stuff to display
 $players = $Review->get_players( );
 
-$colors = [];
+$colors = array( );
 foreach ($players as $key => $player) {
 	$colors[$player['color']] = htmlentities($GLOBALS['_PLAYERS'][$key]).' ['.$key.']';
 }
@@ -84,7 +84,7 @@ try {
 
 	$dice = '';
 	$move = $Review->get_step( );
-	if ('A' === $move[0]) {
+	if ('A' === $move{0}) {
 		list($type, $action) = explode(' ', $move);
 		$action = explode(':', $action);
 		$rolls = explode(',', $action[4]);

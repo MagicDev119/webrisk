@@ -18,19 +18,15 @@
 */
 
 /*
-
 Requires
 ----------------------------------------------------------------------------
 	Settings class:
 		Settings::read('site_name')
 		Settings::read('from_email')
-
 	Log class:
 		Log::write(
-
 	Mysql class:
 		Mysql::get_instance( )->fetch_row(
-
 	MyException class
 */
 
@@ -181,7 +177,6 @@ class Email
 		}
 
 		$message .= '
-
 =============================================
 This message was automatically sent by
 '.$site_name.'
@@ -297,4 +292,3 @@ and should not be replied to.
 	}
 
 } // end of Email class
-

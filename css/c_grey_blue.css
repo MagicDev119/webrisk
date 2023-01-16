@@ -1,0 +1,298 @@
+body {
+	color: grey;
+	font-family: Roboto, sans-serif;
+	font-weight: 400;
+	background-color: #1b1b1b;
+}
+h1{    border-bottom: 1px solid grey;
+    box-shadow: 2px 2px 4px black
+}
+#caption{
+  font-size: 1.5em;
+  position: static;
+  color:#5F7C8A;
+  top: 65px;
+  width: 50%;
+  text-shadow: 1px 1px 2px #000000;  
+}
+
+a {
+	color: #DDD
+}
+
+a:hover {
+	color: #B88FFF
+}
+
+a.help {
+	border-color: #777
+}
+
+a.help:hover {
+	border-color: #777
+}
+
+abbr,
+acronym {
+	border-color: #777
+}
+
+hr.fancy {
+	background-color: #777;
+	border-color: #777
+}
+
+fieldset {
+	border-color: #777
+}
+
+.warning,
+.warning * {
+	color: #D00
+}
+
+.notice,
+.notice * {
+	color: #DD0
+}
+
+.highlight,
+.highlight * {
+	color: orange
+}
+
+.instruction,
+.instruction * {
+	color: #555
+}
+
+#links a {
+	border-color: transparent;
+	background-color: transparent;
+	color: #DDD
+}
+
+#links a:hover {
+	border-color: #000;
+	background-color: #FFF;
+	color: #B88FFF
+}
+
+#menu,
+#mygames {
+	border-color: #5F7C8A;
+	box-shadow: 2px 2px 2px black
+}
+
+#menu a,
+#mygames a {
+	color: #DDD;
+	background-color: #333333;
+	border-color: #333
+}
+
+#menu a:hover,
+#mygames a:hover {
+	color: #B88FFF;
+	background-color: #5F7C8A;
+	border-color: #333
+}
+
+#menu a:hover .notice,
+#mygames a:hover .notice {
+	color: #B88FFF
+}
+
+#menu a .notice,
+#mygames a .notice {
+	color: #D00
+}
+
+#menu li.active a,
+#mygames li.active a {
+	color: #002b27;
+	background-color: #5F7C8A;
+	border-color: #333
+}
+
+#menu li.active a .notice,
+#mygames li.active a .notice {
+	color: orange
+}
+
+#mygames .finished a {
+	color: #555
+}
+
+#mygames .playing a {
+	color: #5F7C8A
+}
+
+#mygames .playing:hover a {
+	color: #B88FFF
+}
+
+
+#mygames .my_turn a {
+	color: #DD0
+}
+
+#mygames .none a {
+	color: #DDD
+}
+
+#sidebar #chatbox {
+	background-color: #111;
+	border-color: #333
+}
+
+#notes {
+	background-color: #111;
+	border-color: #5F7C8A;
+	box-shadow: 2px 2px 2px black
+}
+
+#chats dt {
+	background: #777;
+	color: #FFF
+}
+
+#chats dd {
+	border-color: #777
+}
+
+h2 {
+	border-color: #777
+}
+
+#index_page #chatbox {
+	border-color: #5F7C8A;
+	box-shadow: 2px 2px 2px black;
+}
+
+#index_page #chats dt {
+	border-color: #b34796;
+	background-color: transparent
+}
+
+#index_page #chats dd {
+	border-color: #5F7C8A;
+}
+
+#footer {
+	color: #CED7DB;
+	background-color: #5A727E;
+	border-color: #000;
+	background-size: 100%;
+}
+
+#buttons a {
+	border-color: #777
+}
+#buttons a:hover {
+	color:#B88FFF;
+}
+div.help li strong {
+	color: #D00
+}
+
+table {
+	border-color: #777;
+	box-shadow: 2px 2px 2px black;
+	background-color: #111111
+}
+
+th {
+	border-bottom-color: #777;
+	border-right-color: #777
+}
+
+tr:hover>td,
+tr:hover>td *,
+tr.alt:hover>td,
+tr.alt:hover>td * {
+	background-color: #101519;
+	color: #B88FFF !important
+}
+
+td {
+	border-right-color: #777;
+	text-align:center;
+	font-weight:normal
+}
+
+tr.alt,
+tr:nth-child(2n) {
+	background-color: #222
+}
+
+#custom_trades table.form tr:nth-child(2n) {
+	background-color: inherit
+}
+
+#custom_trades table.form tr:nth-child(2n-1) {
+	background-color: #222
+}
+
+.lowlight,
+.lowlight td {
+	color: #888
+}
+
+thead tr th {
+	background-color: #333
+}
+
+thead tr .headerSortDown,
+thead tr .headerSortUp {
+	background-color: #0C0;
+	color: #000
+}
+
+thead tr .headerSortUp {
+	border-top-color: #000
+}
+
+thead tr .headerSortDown {
+	border-bottom-color: #000
+}
+
+.fancybox-inner {
+	color: #DDD;
+	background-color: #000
+}
+
+.game_info {
+	background: #000;
+	color: #DDD
+}
+
+.game_info th,
+.game_info td {
+	border-bottom: 1px solid #777
+}
+
+table.history td {
+	border-bottom-color: #777
+}
+
+table.history td.active {
+	background-color: #444
+}
+
+#controls .review span {
+	border-color: #888
+}
+
+#controls .review span:hover {
+	border-color: #BBB
+}
+
+#controls .review span.disabled {
+	color: #555;
+	border-color: #444
+}
+#action p {
+    color:#CED7DB;
+	background-color:#5F7C8A;
+}

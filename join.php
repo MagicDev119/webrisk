@@ -92,7 +92,7 @@ if ('' != $Game->passhash) {
 
 $meta['title'] = 'Join Game';
 $meta['head_data'] = '
-	<script>//<![CDATA[
+	<script type="text/javascript">//<![CDATA[
 		$(document).ready( function( ) {
 			$("#show_conquer_limit_table").fancybox({
 				title: null,
@@ -120,11 +120,11 @@ $meta['head_data'] = '
 		});
 	/*]]>*/</script>
 ';
-$hints = [
+$hints = array(
 	'Join a game by filling out your desired game options.' ,
 	'WARNING!<br />Games will be deleted after '.Settings::read('expire_games').' days of inactivity.' ,
 	'If the password field is displayed, this game is password protected, and requires a password to join.' ,
-];
+);
 
 $fog_of_war = $Game->get_fog_of_war( );
 
@@ -195,11 +195,11 @@ if ('none' != $extra_info['conquer_type']) {
 	// if we are calculating based on trade_value, trade_count, or continents
 	// the 1 point buffer needs to be added
 	$start_count = 1;
-	if (in_array($type, ['trade_value', 'trade_count', 'continents'])) {
+	if (in_array($type, array('trade_value', 'trade_count', 'continents'))) {
 		$start_count = 0;
 	}
 
-	$conquests = [];
+	$conquests = array( );
 	$repeats = 0;
 	for ($n = 0; $n <= 200; ++$n) {
 		$limit = max((((((int) floor(($n - $start_count) / $per_number)) + 1) - $skip) * $conquests_per), 0) + $start_at;
@@ -219,7 +219,7 @@ if ('none' != $extra_info['conquer_type']) {
 	}
 
 	// don't show 0 count for certain types
-	if ( ! in_array($type, ['trade_value', 'trade_count', 'continents'])) {
+	if ( ! in_array($type, array('trade_value', 'trade_count', 'continents'))) {
 		unset($conquests[0]);
 	}
 
@@ -436,7 +436,7 @@ EOT;
 }
 
 $contents .= '
-	<hr class="fancy" />';
+	<hr class="fancy" /><img src="images/board.jpg" alt="world_classic" width="137" height="90" title="world">';
 
 // joined list
 if (is_array($game_players) && count($game_players)) {

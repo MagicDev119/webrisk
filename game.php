@@ -1,3 +1,21 @@
+<div id="refresher"><select id="selRe">
+<option value="0" selected>No Refresh</option>
+<option value="15">15</option>
+<option value="30">30</option>
+<option value="60">60</option>
+</select>
+<input type="button" id="pause" name="clearTime" value="||">
+<input type="button" id="continue" value="|>">
+<input type="button" id="update" value="↻">
+<span><br>&nbsp;<span id="reCounter"></span></span></div></div>
+<script src="scripts/refresher.js"></script>
+<script>  function playSound(click) {
+  document.getElementById(click).play();
+};</script>
+<audio id="xplode"  src="sounds/explosion.mp3" preload="auto"></audio>
+<!--<div id="crosshair-h" class="hair"></div>
+<div id="crosshair-v" class="hair"></div>-->
+<div id="cursor-d" class="dotx"></div>
 <?php
 
 require_once 'includes/inc.global.php';
@@ -63,7 +81,7 @@ if ( ! $Game->watch_mode || $GLOBALS['Player']->is_admin) {
 	$chat_html = '
 			<div id="chatbox">
 				<form action="'.$_SERVER['REQUEST_URI'].'" method="post"><div>
-					<input id="chat" type="text" name="chat" />
+					<input id="chat" type="text" name="chat" placeholder="Send chat message..." />
 					<!-- <label for="private" class="inline"><input type="checkbox" name="private" id="private" value="yes" /> Private</label> -->
 				</div></form>
 				<dl id="chats">';
@@ -94,16 +112,15 @@ if ( ! $Game->watch_mode || $GLOBALS['Player']->is_admin) {
 				</dl> <!-- #chats -->
 			</div> <!-- #chatbox -->';
 }
-
 $meta['title'] = htmlentities($Game->name, ENT_QUOTES, 'UTF-8', false).' - #'.$_SESSION['game_id'];
 $meta['show_menu'] = false;
 $meta['head_data'] = '
 	<link rel="stylesheet" type="text/css" media="screen" href="css/game.css" />
 
-	<script>//<![CDATA[
+	<script type="text/javascript">//<![CDATA[
 		var state = "'.(( ! $Game->watch_mode) ? (( ! $Game->paused) ? strtolower($Game->get_player_state($_SESSION['player_id'])) : 'paused') : 'watching').'";
 	/*]]>*/</script>
-	<script src="scripts/game.js"></script>
+	<script type="text/javascript" src="scripts/game.js"></script>
 ';
 
 $player_state = $Game->get_player_state($_SESSION['player_id']);
@@ -146,15 +163,17 @@ switch ($player_state) {
 
 echo get_header($meta);
 
-?>
+?><div id="container1"><div id="container2">
+<div id="wrapper"><h2>Game #<?php echo $_SESSION['game_id'].': '.htmlentities($Game->name, ENT_QUOTES, 'UTF-8', false); ?></h2>
+<ul id="buttons">
+                    <li><a href="games.php"title="large view">➕</a></li>
+				    <li><a href="index.php<?php echo $GLOBALS['_?_DEBUG_QUERY']; ?>"style="color:#FF0000;">Lobby</a></li>
+					<li><a href="#game_info" class="fancybox">Game Info</a></li>
+					<li><a href="history.php" data-fancybox-type="ajax" class="fancybox">Game log</a></li>
+					<li><a href="mapinfo" data-fancybox-type="ajax" class="fancybox">Map Info</a></li>
 
-		<div id="contents">
-			<ul id="buttons">
-				<li><a href="index.php<?php echo $GLOBALS['_?_DEBUG_QUERY']; ?>">Main Page</a></li>
-				<li><a href="game.php<?php echo $GLOBALS['_?_DEBUG_QUERY']; ?>">Reload Game Board</a></li>
 			</ul>
-			<h2>Game #<?php echo $_SESSION['game_id'].': '.htmlentities($Game->name, ENT_QUOTES, 'UTF-8', false); ?> <span class="type"><a href="#game_info" class="fancybox">Game Info</a> <?php echo $state_info; ?></span></h2>
-
+		<div id="contents">
 			<div id="board">
 				<div id="pathmarkers">
 					<div id="pm01"></div><div id="pm02"></div><div id="pm03"></div><div id="pm04"></div><div id="pm05"></div>
@@ -165,15 +184,25 @@ echo get_header($meta);
 					<div id="pm26"></div><div id="pm27"></div><div id="pm28"></div><div id="pm29"></div><div id="pm30"></div>
 					<div id="pm31"></div><div id="pm32"></div><div id="pm33"></div><div id="pm34"></div><div id="pm35"></div>
 					<div id="pm36"></div><div id="pm37"></div><div id="pm38"></div><div id="pm39"></div><div id="pm40"></div>
-					<div id="pm41"></div><div id="pm42"></div><div id="pm43"></div><div id="pm44"></div>
+					<div id="pm41"></div><div id="pm42"></div>
 				</div> <!-- #pathmarkers -->
+<div id="wrap">
+    <div id="viewport">
+      <div class="tv">
+        <div class="screen mute" id="tv">
 
-				<img src="images/blank.gif" width="800" height="449" usemap="#gamemap" alt="" />
+				<img src="images/boards.jpg" width="760" height="500" usemap="#gamemap" alt="" />
+</div>
+      </div>
+    </div>
 
+  </div>
+  		<script src="/js/smoke.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/css/smoke.css" />
 				<?php echo board($Game); ?>
 
 				<div id="next"><?php echo $Game->get_trade_value( ); ?></div>
-
+<div id="nexttext">Next Trade</div>
 				<?php echo $Game->draw_players( ); ?>
 
 				<div id="dice"></div>
@@ -181,27 +210,25 @@ echo get_header($meta);
 			</div> <!-- #board -->
 
 			<div id="controls">
+			    <center><?php echo $state_info; ?></center>
 				<?php echo $Game->draw_action( ); ?>
-				<hr />
-				<?php echo $chat_html; ?>
-			</div> <!-- #controls -->
-
-			<div id="history">
-				<a href="history.php" data-fancybox-type="ajax" class="fancybox">Click for History</a>
+				
+				<?php echo $chat_html; ?><div id="history"><br><p></p>
 			</div> <!-- #history -->
-
+			</div> <!-- #controls -->
 			<?php echo game_info($Game); ?>
 
-			<script>
+			<script type="text/javascript">
 				$('#game_info').hide( );
 			</script>
-
-		</div> <!-- #contents -->
-
+		<!--<div class="container float">
+  (use for live games)
+</div>-->
+		</div> <!-- #contents --></div>
 		<?php echo game_map( ); ?>
-
+</div></div>
 <?php
-
 call($GLOBALS);
 echo get_footer( );
+
 

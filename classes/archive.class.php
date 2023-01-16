@@ -73,10 +73,10 @@ class Archive extends Game {
 	public static function get_list($player_id = 0) {
 		$games = self::get_files( );
 
-		$return = [];
+		$return = array( );
 
 		foreach ($games as & $game) {
-			$entry = [];
+			$entry = array( );
 			$entry['file'] = $game;
 			$entry['short_file'] = substr($game, 0, -4); // remove the extension
 
@@ -128,17 +128,18 @@ class Archive extends Game {
 								break;
 
 							default :
-								break;
+								continue 3;
 						}
+						break;
 
 					case 1 : // extra info section
 						$entry['extra_info'] = array_merge_plus(self::$_EXTRA_INFO_DEFAULTS, json_decode($line, true));
 						break;
 
 					case 2 : // player data section
-						$player = [
+						$player = array(
 							'order' => $n + 1,
-						];
+						);
 
 						list($player['id'], $player['color'], $player['name']) = explode(' - ', $line, 3);
 

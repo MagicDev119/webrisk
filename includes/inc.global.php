@@ -11,21 +11,19 @@ date_default_timezone_set('UTC');
 ini_set('register_globals', 0); // you really should have this off anyways
 
 // deal with those lame magic quotes
-if (version_compare(PHP_VERSION, '7.4.0') < 0) {
-	if (get_magic_quotes_gpc()) {
-		function stripslashes_deep($value) {
-			$value = is_array($value)
-				? array_map('stripslashes_deep', $value)
-				: stripslashes($value);
+if (get_magic_quotes_gpc( )) {
+	function stripslashes_deep($value) {
+		$value = is_array($value)
+			? array_map('stripslashes_deep', $value)
+			: stripslashes($value);
 
-			return $value;
-		}
-
-		$_POST = array_map('stripslashes_deep', $_POST);
-		$_GET = array_map('stripslashes_deep', $_GET);
-		$_COOKIE = array_map('stripslashes_deep', $_COOKIE);
-		$_REQUEST = array_map('stripslashes_deep', $_REQUEST);
+		return $value;
 	}
+
+	$_POST = array_map('stripslashes_deep', $_POST);
+	$_GET = array_map('stripslashes_deep', $_GET);
+	$_COOKIE = array_map('stripslashes_deep', $_COOKIE);
+	$_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 }
 
 
@@ -73,16 +71,16 @@ $GLOBALS['_TZ'] = $GLOBALS['_DEFAULT_TIMEZONE'];
  * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 $Mysql = Mysql::get_instance( );
-$Mysql->set_settings([
+$Mysql->set_settings(array(
 	'log_path' => LOG_DIR,
 	'email_subject' => GAME_NAME.' Query Error',
-]);
+));
 
 $GLOBALS['_&_DEBUG_QUERY'] = '';
 $GLOBALS['_?_DEBUG_QUERY'] = '';
 
 // make a list of all the color files available to use
-$GLOBALS['_COLORS'] = [];
+$GLOBALS['_COLORS'] = array( );
 
 $dh = opendir(realpath(dirname(__FILE__).'/../css'));
 while (false !== ($file = readdir($dh))) {
@@ -128,7 +126,7 @@ session_start( );
 
 // make sure we don't cross site session steal in our own site
 if ( ! isset($_SESSION['PWD']) || (__FILE__ != $_SESSION['PWD'])) {
-	$_SESSION = [];
+	$_SESSION = array( );
 }
 $_SESSION['PWD'] = __FILE__;
 
@@ -160,12 +158,12 @@ if ( ! defined('DEBUG')) {
 $GLOBALS['_LOGGING'] = DEBUG; // do not change, rather, change debug value
 
 if (class_exists('Settings') && Settings::test( )) {
-	$Mysql->set_settings([
+	$Mysql->set_settings(array(
 		'log_errors' => Settings::read('DB_error_log'),
 		'email_errors' => Settings::read('DB_error_email'),
 		'email_from' => Settings::read('from_email'),
 		'email_to' => Settings::read('to_email'),
-	]);
+	));
 }
 
 if (defined('DEBUG') && DEBUG) {

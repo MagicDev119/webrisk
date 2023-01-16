@@ -34,16 +34,16 @@ foreach ($zones as $zone) {
 
 $meta['title'] = 'Update Profile';
 $meta['head_data'] = '
-	<script>//<![CDATA[
+	<script type="text/javascript">//<![CDATA[
 		var profile = 1;
 	//]]></script>
-	<script src="scripts/register.js"></script>
+	<script type="text/javascript" src="scripts/register.js"></script>
 ';
 
-$hints = [
-	'<span class="notice">GLOBAL SETTINGS</span><br />These setting affect ALL iohelix games that also display the GLOBAL SETTINGS text.' ,
+$hints = array(
+	'<span class="notice">PROFILE SETTINGS</span><br /><!--These setting affect ALL iohelix games that also display the GLOBAL SETTINGS text.-->' ,
 	'Here you can update your name, email address, and password.' ,
-];
+);
 
 $contents = <<< EOF
 	<form method="post" action="{$_SERVER['REQUEST_URI']}"><div class="formdiv">

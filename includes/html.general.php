@@ -18,11 +18,11 @@ function get_header($meta = null) {
 	}
 
 	$title = ( ! empty($meta['title'])) ? GAME_NAME.' :: '.$meta['title'] : GAME_NAME;
-	$show_menu = $meta['show_menu'] ?? true;
-	$show_nav_links = $meta['show_nav_links'] ?? true;
-	$menu_data = $meta['menu_data'] ?? false;
-	$head_data = $meta['head_data'] ?? '';
-	$file_name = $meta['file_name'] ?? basename($_SERVER['SCRIPT_NAME']);
+	$show_menu = (isset($meta['show_menu'])) ? (bool) $meta['show_menu'] : true;
+	$show_nav_links = (isset($meta['show_nav_links'])) ? (bool) $meta['show_nav_links'] : true;
+	$menu_data = (isset($meta['menu_data'])) ? $meta['menu_data'] : false;
+	$head_data = (isset($meta['head_data'])) ? $meta['head_data'] : '';
+	$file_name = (isset($meta['file_name'])) ? $meta['file_name'] : basename($_SERVER['SCRIPT_NAME']);
 	$file_name = substr($file_name, 0, strrpos($file_name, '.'));
 
 	// make sure we have these
@@ -36,20 +36,20 @@ function get_header($meta = null) {
 
 	if ($show_menu) {
 		if ( ! $menu_data) {
-			$menu_data = [
+			$menu_data = array(
 				'my_turn' => 0,
 				'my_games' => 0,
 				'games' => 0,
 				'new_msgs' => 0,
 				'msgs' => 0,
-			];
+			);
 
 			list($menu_data['games'], , $menu_data['my_games'], $menu_data['my_turn']) = Game::get_count($_SESSION['player_id']);
 			$menu_data['archive'] = Archive::get_count( );
 
 			$messages = Message::get_count($_SESSION['player_id']);
-			$menu_data['msgs'] = (int) $messages[0] ?? 0;
-			$menu_data['new_msgs'] = (int) $messages[1] ?? 0;
+			$menu_data['msgs'] = (int) @$messages[0];
+			$menu_data['new_msgs'] = (int) @$messages[1];
 
 			$allow_blink = ('index.php' == basename($_SERVER['PHP_SELF']));
 		}
@@ -77,7 +77,7 @@ function get_header($meta = null) {
 	$admin_css = $admin_div = '';
 	if (isset($_SESSION['admin_id']) && isset($_SESSION['player_id']) && ($_SESSION['player_id'] != $_SESSION['admin_id'])) {
 		$admin_css = '
-			<style>
+			<style type="text/css">
 				html { border: 5px solid red; }
 				#admin_username {
 					background: red;
@@ -110,25 +110,56 @@ function get_header($meta = null) {
 	$html = <<< EOF
 <!DOCTYPE html>
 <html lang="en-us">
+    <meta name="title" content="Play Risk online at mapconquest.com. A free multiplayer browser game based on the classic board game risk.">
+<meta name="description" content="Wanna play a risk game online? You can play a Free browser game of risk at mapconquest.com. No download, No ads! Play with other users online from your computer or any smartphone. ">
+<meta name="keywords" content="play risk online, free game of risk, best place to play risk online, where can i play risk online, play a game of risk, play risiko">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="language" content="English">
 <head>
+<!--<script>
+var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
+function mischandler(){
+return false;
+}
+function mousehandler(e){
+var myevent = (isNS) ? e : event;
+var eventbutton = (isNS) ? myevent.which : myevent.button;
+if((eventbutton==2)||(eventbutton==3)) return false;
+}
+document.oncontextmenu = mischandler;
+document.onmousedown = mousehandler;
+document.onmouseup = mousehandler;
+</script>-->
+<script>function hover(element) {
+  element.setAttribute('src', 'images/drows.png');
+}
 
+function unhover(element) {
+  element.setAttribute('src', 'images/sword.png');
+}
+
+var playBtn = document.getElementById('avatar')</script>
+
+<img id="avatar" src="images/drows.png" onmouseover="hover(this);" onmouseout="unhover(this);" />
 	<title>{$title}</title>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<script>
+	<script type="text/javascript">
 		{$debug_string}
 		{$query_strings}
 	</script>
 
 	<script src="//code.jquery.com/jquery-1.11.2.js"></script>
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
-	<script src="scripts/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="scripts/jquery.tablesorter.js"></script>
 
 	<!-- fancybox -->
 	<link rel="stylesheet" type="text/css" media="screen" href="scripts/jquery.fancybox/jquery.fancybox.css" />
-	<script src="scripts/jquery.fancybox/jquery.fancybox.js"></script>
-	<script>
+	<script type="text/javascript" src="scripts/jquery.fancybox/jquery.fancybox.js"></script>
+	<script type="text/javascript">
 		$(document).ready( function( ) {
 			// set fancybox defaults
 //			$.fn.fancybox.defaults['overlayColor'] = '#000';
@@ -142,7 +173,7 @@ function get_header($meta = null) {
 		});
 	</script>
 	<!-- hide the fancybox titles -->
-	<style>
+	<style type="text/css">
 		#fancy_title { display: none !important; }
 	</style>
 
@@ -160,7 +191,7 @@ function get_header($meta = null) {
 	{$admin_div}
 
 	<div id="links">{$nav_links}</div>
-	<h1><a href="index.php">{$GAME_NAME}</a></h1>
+	<h1><a href="https://mapconquest.com/">{$GAME_NAME}</a></h1>
 	<div id="wrapper">
 EOF;
 
@@ -223,7 +254,7 @@ EOF;
  * @param array option meta info
  * @return string HTML footer for page
  */
-function get_footer($meta = []) {
+function get_footer($meta = array( )) {
 	$foot_data = isset($meta['foot_data']) ? $meta['foot_data'] : '';
 
 	$players = GamePlayer::get_count( );

@@ -93,7 +93,7 @@ define('FALS', 3);
 // init_sort_column is an array of the format col => dir where dir is 0 for ASC and 1 for DESC
 function get_table($table_format, $table_data, $meta = null)
 {
-	$meta_defaults = [
+	$meta_defaults = array(
 		'alt_class' => 'alt',
 		'caption' => '',
 		'class' => 'datatable',
@@ -102,7 +102,7 @@ function get_table($table_format, $table_data, $meta = null)
 		'no_data' => 'There is no data',
 		'sortable' => false,
 		'totals' => false,
-	];
+	);
 
 	$opts = array_merge($meta_defaults, $meta);
 
@@ -117,7 +117,7 @@ function get_table($table_format, $table_data, $meta = null)
 			<thead>
 			<tr>';
 
-	$total_cols = $sort_types = [];
+	$total_cols = $sort_types = array( );
 	foreach ($table_format as $col) {
 		// test for SPECIAL data first
 		if ( ! is_array($col[TYPE]) && ('SPECIAL_' == substr($col[TYPE], 0, 8))) {
@@ -350,7 +350,7 @@ function get_sort_script($table_id, $sort_types = '', $alt_class = 'alt', $init_
 	}
 
 	$html = '
-		<script>//<![CDATA[';
+		<script type="text/javascript">//<![CDATA[';
 
 	if ( ! is_null($init_sort_column)) {
 		$html .= '
@@ -497,8 +497,8 @@ if ( ! function_exists('ifenr')) {
 
 
 if ( ! function_exists('ifdateor')) {
-	function ifdateor($date_format, $if, $or) {
-		$date = ($if ?? false) ?: $or;
+	function ifdateor($date_format, & $if, $or) {
+		$date = (isset($if) && is_int($if)) ? $if : $or;
 
 		if (is_int($date)) {
 			$date = ldate($date_format, $date);

@@ -5,7 +5,7 @@ require_once 'includes/inc.global.php';
 
 $meta['title'] = 'Frequently Asked Questions';
 $meta['head_data'] = '
-	<script src="scripts/messages.js"></script>
+	<script type="text/javascript" src="scripts/messages.js"></script>
 ';
 
 $contents = '
@@ -50,16 +50,18 @@ $contents = '
 		In the turncoat game variation, the traded bonus card is used to switch your enemy armies to your army. 
 		All of the enemy armies on the bonus land become yours.  However, you may not use a turncoat card against an opponent that has only one territory left.<br>
 		Note: With this feature, armies will not be added to the bonus land, however, the army count on the bonus land may be reduced by the bonus card value if the nuke feature is used.
-	</div>
-';
+	</div>';
 
-$hints = [
-	'<span class="highlight">Have a question?</span>',
-	'Contact the administrator or ask your question in the game chat or main lobby',
-];
+
+$hints = array(
+	
+	'<span class="highlight">Have a question?</span>' ,
+	'Contact the administrator or ask your question in the game chat or main lobby' ,
+	
+);
 
 echo get_header($meta);
 echo get_item($contents, $hints, $meta['title']);
 call($GLOBALS);
-echo get_footer();
+echo get_footer( );
 

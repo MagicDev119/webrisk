@@ -252,4 +252,3 @@ class Flash
 	}
 
 } // end of Flash class
-

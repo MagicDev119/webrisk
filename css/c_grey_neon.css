@@ -1,0 +1,292 @@
+body {
+	color: #CBEBE3;
+	background-color: #131417
+}
+#caption{
+  font-size: 1.5em;
+  position: static;
+  color:#717790;
+  top: 65px;
+  width: 50%;
+  text-shadow: 1px 1px 2px #000000;  
+}
+
+h1 {
+	border-color: #0EBEFF;
+	background-color: #2C303A;
+}
+
+a {
+	color: #d3c2c0
+}
+
+a:hover {
+	color: #c0d1d3
+}
+
+a.help {
+	border-color: #0EBEFF;
+}
+
+a.help:hover {
+	border-color: #0EBEFF;
+}
+
+abbr,
+acronym {
+	border-color: #0EBEFF;
+}
+
+hr.fancy {
+	background-color: #000;
+	border-color: #0EBEFF;
+}
+
+fieldset {
+	border-color: #0EBEFF;
+}
+
+.warning,
+.warning * {
+	color: #FF705A
+}
+
+.notice,
+.notice * {
+	color: #DD0
+}
+
+.highlight,
+.highlight * {
+	color: #FFDD40
+}
+
+.instruction,
+.instruction * {
+	color: #AAA
+}
+
+#links a {
+	border-color: transparent;
+	background-color: transparent;
+	color: #DDD;
+}
+
+#links a:hover {
+	border-color: #0EBEFF;
+	background-color: #FFF;
+	color: #666BAB;
+}
+
+#menu,
+#mygames {
+	border-color: #0EBEFF;
+}
+
+#menu a,
+#mygames a {
+	color: #CBEBE3;
+	background-color: #2C303A;
+	border-color: #0EBEFF;
+}
+
+#menu a:hover,
+#mygames a:hover {
+	color: #7E9DAD;
+	background-color: #2C303A;
+	border-color: #0EBEFF
+}
+
+#menu a:hover .notice,
+#mygames a:hover .notice {
+	color: #ffdd40
+}
+
+#menu a .notice,
+#mygames a .notice {
+	color: #ffdd40
+}
+
+#menu li.active a,
+#mygames li.active a {
+	color: #FFF;
+	background-color: #717790;
+	border-color: #0EBEFF
+}
+
+#menu li.active a .notice,
+#mygames li.active a .notice {
+	color: #FFF
+}
+
+#mygames .finished a {
+	color: #999
+}
+
+#mygames .playing a {
+	color: #ffdd40
+}
+
+#mygames .my_turn a {
+	color: #DD0
+}
+
+#mygames .none a {
+	color: #333
+}
+
+#sidebar #chatbox {
+	background-color: #5A5F73;
+	border-color: #0EBEFF
+}
+
+#notes {
+	background-color: #2C303A;
+	border-color: #0EBEFF
+}
+
+#chats dt {
+	background: #777;
+	color: white;
+	text-shadow: 1px 1px black;
+}
+
+#chats dd {
+	border-color: #0EBEFF
+}
+
+h2 {
+	border-color: #0EBEFF
+}
+
+#index_page #chatbox {
+	border-color: #0EBEFF
+}
+
+#index_page #chats dt {
+	border-color: #0EBEFF;
+	background-color: transparent
+}
+
+#index_page #chats dd {
+	border-color: #0EBEFF
+}
+
+#footer {
+	color: #0EBEFF;
+	background-color: #2C303A;
+	border-color: #0EBEFF
+}
+
+#buttons a {
+	border-color: #0EBEFF
+}
+
+div.help li strong {
+	color: #ffdd40
+}
+
+table {
+	border-color: #0EBEFF;
+	background-color: #2C303A
+}
+
+th {
+	border-bottom-color: #0EBEFF;
+	border-right-color: #0EBEFF
+}
+
+tr:hover>td,
+tr:hover>td *,
+tr.alt:hover>td,
+tr.alt:hover>td * {
+	background-color: #444857;
+	color: white !important
+}
+
+td {
+	border-right-color: #0EBEFF
+}
+
+tr.alt,
+tr:nth-child(2n) {
+	background-color: #232323
+}
+
+#custom_trades table.form tr:nth-child(2n) {
+	background-color: inherit
+}
+
+#custom_trades table.form tr:nth-child(2n-1) {
+	background-color: #E7E7E7
+}
+
+.lowlight,
+.lowlight td {
+	color: #666
+}
+
+thead tr th {
+	background-color: #131417
+}
+
+thead tr .headerSortDown,
+thead tr .headerSortUp {
+	background-color: #666BAB;
+	color: #FFF
+}
+
+thead tr .headerSortUp {
+	border-top-color: #0EBEFF
+}
+
+thead tr .headerSortDown {
+	border-bottom-color: #0EBEFF
+}
+
+.fancybox-inner {
+	color: #CBEBE3;
+	background-color: #2C303A
+}
+
+.game_info {
+	background: #FFF;
+	color: #7E9DAD
+}
+
+.game_info th,
+.game_info td {
+	border-bottom: 1px solid #0EBEFF
+}
+
+table.history td {
+	border-bottom-color: #0EBEFF
+}
+
+table.history td.active {
+	background-color: #444
+}
+#players {
+	background-color: #131417
+}
+#controls {
+	background-color: #131417;
+	
+}
+#controls .review span {
+	border-color: #0EBEFF
+}
+
+#controls .review span:hover {
+	border-color: #0EBEFF
+}
+
+#controls .review span.disabled {
+	color: #CCC;
+	border-color: #0EBEFF
+}
+
+#action p {
+	background-color: #2C303A;
+	color: #0EBEFF;
+}

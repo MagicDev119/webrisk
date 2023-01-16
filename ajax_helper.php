@@ -26,7 +26,7 @@ if (('GET' === $_SERVER['REQUEST_METHOD']) && DEBUG) {
 	call($_POST);
 }
 
-
+var_dump('--------');
 // run the index page refresh checks
 if (isset($_POST['timer'])) {
 	$message_count = (int) Message::check_new($_SESSION['player_id']);
@@ -110,20 +110,18 @@ $Game = new Game((int) $_SESSION['game_id']);
 // run the card clicks
 if (isset($_POST['cardcheck'])) {
 	// easter egg?  maybe...
-	$notice = [
-		'Nice Try',
-		'Keep trying to cheat, and we\'ll gang up on you',
-		'I\'m telling your parents or legal guardians that you\'re trying to cheat',
-		'CHEATER',
-		'What? You actually thought that would work?',
-		'They have cards, but I\'m not telling you what they are',
-		'I\'m sure the cards they have are the ones you need',
-		'Stop that',
-		'Not tellin\'',
-		'It would be easier to ask them what their cards are',
-		'I don\'t think they would appreciate you trying to cheat',
-		'I\'ve just sucked one year of your life away',
-	];
+	$notice = array(
+'Nice Try',
+'What? You actually thought that would work?',
+'They have cards, but I\'m not telling you what they are',
+'I\'m sure the cards they have are the ones you need',
+'Not showin\' my cards',
+'It would be easier to ask them what their cards are',
+'What doctor also specializes in card games? The cardiologist',
+'Why can\'t pirates play cards? Because they\'re standing on the deck',
+'What is the worst animal to play cards with? A Cheetah',
+'What card was thrown out of the deck for being too rebellious? The wild card',
+	);
 
 	if ($_POST['id'] != $_SESSION['player_id']) {
 		echo $notice[mt_rand(0, count($notice) - 1)];
@@ -164,7 +162,7 @@ if (($player_id != $_SESSION['player_id']) && ! $GLOBALS['Player']->is_admin) {
 
 // run the 'Nudge' button
 if (isset($_POST['nudge'])) {
-	$return = [];
+	$return = array( );
 	$return['token'] = $_SESSION['token'];
 
 	try {
@@ -178,10 +176,25 @@ if (isset($_POST['nudge'])) {
 	exit;
 }
 
+/* auto skip to next turn */
+if (isset($_POST['skip']) && $_POST['skip'] == 'turn_next') {
+	$return = array( );
+	$return['token'] = $_SESSION['token'];
 
+	try {
+		$Game->skipToNext($_POST['skip'], 0);
+	}
+	catch (MyException $e) {
+		$return['error'] = 'ERROR: '.$e->outputMessage( );
+	}
+
+	$return['action'] = 'RELOAD';
+	echo json_encode($return);
+	exit;
+}
 // run the 'Skip' button
 if (isset($_POST['skip'])) {
-	$return = [];
+	$return = array( );
 	$return['token'] = $_SESSION['token'];
 
 	try {
@@ -199,7 +212,7 @@ if (isset($_POST['skip'])) {
 
 // run the game actions
 if (isset($_POST['state'])) {
-	$return = [];
+	$return = array( );
 	$return['token'] = $_SESSION['token'];
 
 	switch ($_POST['state']) {
@@ -215,7 +228,7 @@ if (isset($_POST['state'])) {
 
 		case 'trading' :
 			try {
-				$Game->trade_cards($player_id, $_POST['cards'], $_POST['bonus_card'] ?? null);
+				$Game->trade_cards($player_id, $_POST['cards'], @$_POST['bonus_card']);
 				$return['action'] = 'RELOAD';
 			}
 			catch (MyException $e) {
@@ -269,7 +282,7 @@ if (isset($_POST['state'])) {
 					$return['num_on_defend'] = '?';
 
 					if (isset($return['dice']['defend'])) {
-						$return['dice']['defend'] = ['?', '?', '?'];
+						$return['dice']['defend'] = array('?','?','?');
 					}
 				}
 

@@ -12,23 +12,23 @@ if (empty($_SESSION['game_file'])) {
 try {
 	$Review = new Review($_SESSION['game_file'], $_SESSION['step']);
 
-	$table_format = [
-		['SPECIAL_CLASS', true, '[[[class]]]'],
-		[' ', ' *** '],
-		['Message', 'message'],
-	];
-	$table_meta = [
+	$table_format = array(
+		array('SPECIAL_CLASS', true, '[[[class]]]') ,
+		array(' ', ' *** ') ,
+		array('Message', 'message') ,
+	);
+	$table_meta = array(
 		'no_data' => '<p>There is nothing to show yet</p>' ,
 		'caption' => 'Game History &nbsp; &nbsp; <span class="info">Newest entries on top</span>' ,
 		'class' => 'history' ,
 		'alt_class' => '' ,
-	];
+	);
 
 	if ( ! isset($history)) {
 		$logs = $Review->get_steps(true, $_SESSION['step']);
 		$players = $Review->get_players( );
 
-		$colors = [];
+		$colors = array( );
 		foreach ($players as $key => $player) {
 			$colors[$player['color']] = htmlentities($GLOBALS['_PLAYERS'][$key]).' ['.$key.']';
 		}
@@ -41,12 +41,11 @@ try {
 			if (' - - ' == substr($log['message'], 0, 5)) {
 				$log['message'] = str_replace('">', ' outcome">', $log['message']);
 				$log['message'] = str_replace('and was defeated', '<span class="defeat">and was defeated</span>', $log['message']);
-
+			}
 				$log['message'] = str_replace('">', ' attack">', $log['message']);
 				$log['message'] = str_replace('nuked', '<span class="trade">nuked</span>', $log['message']);
 				$log['message'] = str_replace('turned', '<span class="trade">turned</span>', $log['message']);
-			}
-
+						
 			// test the data or the message and add a class to the message
 			$class = '';
 			switch ($log['data'][0]) {

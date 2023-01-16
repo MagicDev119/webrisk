@@ -11,16 +11,16 @@ $GLOBALS['Player']->log_out(false, true);
 $meta['title'] = 'Login';
 $meta['show_menu'] = false;
 $meta['head_data'] = '
-	<script src="scripts/jquery.overlabel.js"></script>
-	<script src="scripts/jquery.showpass.js"></script>
-	<script>//<![CDATA[
+	<script type="text/javascript" src="scripts/jquery.overlabel.js"></script>
+	<script type="text/javascript" src="scripts/jquery.showpass.js"></script>
+	<script type="text/javascript">//<![CDATA[
 		jQuery(document).ready( function($) {
 			$("div.formdiv label").not(".inline").overlabel( );
 			$("div.formdiv input").showpass( );
 		});
 	//]]></script>
 
-	<style>
+	<style type="text/css">
 		.formdiv div {
 			position: relative;
 		}
@@ -85,12 +85,159 @@ echo get_header($meta);
 		</div>
 
 		<?php call($GLOBALS); ?>
+<style>
 
+p {
+  margin: 1.5em 0;
+  color: #aaa;
+}
+
+img {
+  max-height: 50vh;
+  text-align:center;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: #bbb;
+}
+
+.italic { font-style: italic; }
+.small { font-size: 0.8em; }
+
+/** LIGHTBOX MARKUP **/
+
+.lightbox {
+  /* Default to hidden */
+  display: none;
+
+  /* Overlay entire screen */
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  /* A bit of padding around image */
+  padding: 1em;
+
+  /* Translucent background */
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Unhide the lightbox when it's the target */
+.lightbox:target {
+  display: block;
+}
+
+.lightbox span {
+  /* Full width and height */
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  /* Size and position background image */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.dropbtn {
+font-size: 14px;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: auto;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 2px black;
+}
+
+.dropup {
+  position: relative;
+  display: inline-block;
+}
+
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 100px;
+  bottom: 23px;
+  z-index: 1;
+}
+
+.dropup-content a {
+  font-size: 10px;
+  color: black;
+  padding-top: 2px;
+  padding-right: 2px;
+  padding-bottom: 2px;
+  padding-left: 2px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropup-content a:hover {background-color: #5F7C8A}
+
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+.active, .dropup:hover .dropbtn {
+  background-color: #5F7C8A;
+}
+</style>
+<!-- Lightbox usage markup -->
+<center>
+<center><h2>World Classic</h2></center>
+
+<!-- thumbnail image wrapped in a link -->
+<a href="#img1">
+  <img src="./images/board.jpg">
+</a>
+
+<!-- lightbox container hidden with CSS -->
+<a href="#" class="lightbox" id="img1">
+  <span style="background-image: url('./images/board.jpg')"></span>
+</a>
+<div class="dropup">
+  <button class="dropbtn">More</button>
+  <div class="dropup-content">
+    <a href="https://www.mapconquest.com/play" class="active">World Classic</a>
+    <a href="https://www.mapconquest.com/re">Roman Empire</a>
+    <a href="https://www.mapconquest.com/9k">9 Kingdoms</a>
+    <a href="https://www.mapconquest.com/vikings">Vikings</a>
+    <a href="https://www.mapconquest.com/balkans">Balkans</a>
+    <a href="https://www.mapconquest.com/caribbean">Caribbean</a>
+    <a href="https://www.mapconquest.com/nz">New Zealand</a>
+    <a href="https://www.mapconquest.com/japan">Japan</a>
+    <a href="https://www.mapconquest.com/fantasy">Fantasy Map</a>
+    <a href="https://www.mapconquest.com/germany">Germany</a>
+    <a href="https://www.mapconquest.com/a&a">Axis & Allies</a>
+    <a href="https://www.mapconquest.com/na">North America</a>
+    <a href="https://www.mapconquest.com/gc">The Gold Coast</a>    
+    <a href="https://www.mapconquest.com/australasia">Australasia</a> 
+    <a href="https://www.mapconquest.com/greece">Ancient Greece</a> 
+    <a href="https://www.mapconquest.com/timor">Timor Islands</a>
+    <a href="https://www.mapconquest.com/pi">The Philippines</a> 
+    <a href="https://www.mapconquest.com/nn">Navajo Nation</a>   
+    <a href="https://www.mapconquest.com/chicago">Chicago</a>  
+    <a href="https://www.mapconquest.com/ad395">R.Empire ad395</a>     
+  </div>
+</div>
+<p class="italic small">
+  42 territories, 6 regions (WarOrder)
+</p></center>
 		<div id="footerspacer">&nbsp;</div>
 
 		<div id="footer">
-			<p><?php echo GAME_NAME; ?> <?php echo $GLOBALS['_VERSION']; ?>, last updated <?php echo ldate('F j, Y', strtotime($GLOBALS['_UPDATED'])); ?></p>
-			<p><?php echo GAME_NAME; ?> is Free Software released under the GNU General Public License (GPL).</p>
+			<p>Copyright © 2021 All Rights Reserved by <?php echo GAME_NAME; ?> (Not Associated with official Risk or Hasbro..)</p>
 		</div>
 
 	</div>

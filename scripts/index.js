@@ -1,4 +1,3 @@
-
 // index javascript
 
 var reload = true; // do not change this
@@ -130,4 +129,3 @@ function ajax_refresh( ) {
 
 	refresh_timer = setTimeout('ajax_refresh( )', refresh_timeout);
 }
-
